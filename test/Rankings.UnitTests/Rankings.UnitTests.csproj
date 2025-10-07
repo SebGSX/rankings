@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <Version>1.0.0</Version>
+        <Title>Rankings Unit Tests</Title>
+        <Authors>Seb Garrioch</Authors>
+        <Description>Unit tests for a small, self-contained rankings app that runs on Windows, Linux, and macOS within their respective terminals.</Description>
+        <Copyright>© 2025 Seb Garrioch. All rights reserved.</Copyright>
+        <PackageProjectUrl>https://github.com/users/SebGSX/projects/10</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/SebGSX/rankings/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/SebGSX/rankings</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector" Version="6.0.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+        <PackageReference Include="xunit" Version="2.9.2"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Rankings\Rankings.csproj" />
+    </ItemGroup>
+
+</Project>

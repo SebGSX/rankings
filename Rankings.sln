@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Supporting Files", "Supporting Files", "{8B02B60F-40FD-4B09-9F6B-F895EA2F53A5}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		SECURITY.md = SECURITY.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5A7049D0-0173-4FA5-A7EB-65665B4D7A89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{9166CFE7-1B9A-4DCE-BAEF-FF939F59DCF1}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\enabler_story.md = .github\ISSUE_TEMPLATE\enabler_story.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
+		.github\ISSUE_TEMPLATE\user_story.md = .github\ISSUE_TEMPLATE\user_story.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PULL_REQUEST_TEMPLATE", "PULL_REQUEST_TEMPLATE", "{D3D585F4-769F-489B-8DB2-732DB8D488D5}"
+	ProjectSection(SolutionItems) = preProject
+		.github\PULL_REQUEST_TEMPLATE\pull_request.md = .github\PULL_REQUEST_TEMPLATE\pull_request.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{817E71C9-654A-4829-9B35-8C0B60AFD5EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{067936D8-44B4-4976-BE45-D88BAB3983A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rankings", "src\Rankings\Rankings.csproj", "{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rankings.UnitTests", "test\Rankings.UnitTests\Rankings.UnitTests.csproj", "{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9166CFE7-1B9A-4DCE-BAEF-FF939F59DCF1} = {5A7049D0-0173-4FA5-A7EB-65665B4D7A89}
+		{D3D585F4-769F-489B-8DB2-732DB8D488D5} = {5A7049D0-0173-4FA5-A7EB-65665B4D7A89}
+		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3} = {817E71C9-654A-4829-9B35-8C0B60AFD5EF}
+		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F} = {067936D8-44B4-4976-BE45-D88BAB3983A6}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
