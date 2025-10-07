@@ -2,7 +2,8 @@
 
 ## Overview
 
-The `rankings` command-line app 
+The `rankings` command-line app is a small, self-contained rankings app that runs on Windows, Linux, and macOS within 
+their respective terminals.
 
 ## Getting Started
 
