@@ -1,6 +1,6 @@
 # Rankings
 
-[![Rankings (CI)](https://github.com/SebGSX/Rankings/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/SebGSX/rankings/actions/workflows/continuous-integration.yml)
+[![Rankings (CI)](https://github.com/SebGSX/rankings/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/SebGSX/rankings/actions/workflows/continuous-integration.yml)
 [![GitHub tag](https://img.shields.io/github/tag/SebGSX/rankings?include_prereleases=&sort=semver&color=blue)](https://github.com/SebGSX/rankings/releases/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 [![issues - rankings](https://img.shields.io/github/issues/SebGSX/rankings)](https://github.com/SebGSX/rankings/issues)
