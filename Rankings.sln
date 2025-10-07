@@ -33,6 +33,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rankings", "src\Rankings\Ra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rankings.UnitTests", "test\Rankings.UnitTests\Rankings.UnitTests.csproj", "{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{6FFC3476-5F02-449D-90FB-83A4EE8116F5}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\continuous-integration.yml = .github\workflows\continuous-integration.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +48,7 @@ Global
 		{D3D585F4-769F-489B-8DB2-732DB8D488D5} = {5A7049D0-0173-4FA5-A7EB-65665B4D7A89}
 		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3} = {817E71C9-654A-4829-9B35-8C0B60AFD5EF}
 		{1C22A25A-7936-4DBE-B682-A3ED3B9EEC4F} = {067936D8-44B4-4976-BE45-D88BAB3983A6}
+		{6FFC3476-5F02-449D-90FB-83A4EE8116F5} = {5A7049D0-0173-4FA5-A7EB-65665B4D7A89}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{18DB29ED-67E3-4C2D-907E-D4996E3D77E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
