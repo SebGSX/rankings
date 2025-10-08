@@ -26,6 +26,12 @@ their respective terminals.
 
 To run the app, please ensure that [.NET 9.0 SDK](https://dotnet.microsoft.com/download) is installed.
 
+### GitHub Project
+
+The project is hosted on GitHub within the [Rankings Project](https://github.com/users/SebGSX/projects/10).
+
+> *Note:* The project uses a simple Kanban board with user and enabler stories to track progress.
+
 ### Project Structure
 The project is structured as follows:
 

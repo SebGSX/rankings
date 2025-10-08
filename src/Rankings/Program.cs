@@ -24,6 +24,7 @@ public abstract class Program
     public static void Main(string[] args)
     {
         RootCommand.AddResultOption();
+        RootCommand.AddFileOption();
         
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
         RootCommand.Parse(args).Invoke();
