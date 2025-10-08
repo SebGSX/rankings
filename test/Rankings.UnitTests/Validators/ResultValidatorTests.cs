@@ -14,7 +14,7 @@ namespace Rankings.UnitTests.Validators;
 public class ResultValidatorTests
 {
     /// <summary>
-    ///     Tests that the validator adds an error when the input has multiple contestant result separators.
+    ///     Tests that the validator adds an error when the input is invalid.
     /// </summary>
     /// <param name="input">The input string to validate.</param>
     /// <param name="expected">The expected error message.</param>

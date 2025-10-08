@@ -14,6 +14,26 @@ namespace Rankings.Extensions;
 public static class RankingsRootCommandExtensions
 {
     /// <summary>
+    ///     Adds the file option to the root command.
+    /// </summary>
+    /// <param name="rootCommand">The root command receiving the option.</param>
+    /// <returns>The root command with the option added.</returns>
+    public static RootCommand AddFileOption(this RootCommand rootCommand)
+    {
+        var fileOption = new Option<FileInfo>(
+            name: CommandLineOptions.FileOption[0],
+            aliases: CommandLineOptions.FileOption[1..])
+        {
+            Description = Common.FileOption_Description,
+            Validators = { FileValidator.Validate() }
+        };
+        
+        rootCommand.Options.Add(fileOption);
+        
+        return rootCommand;
+    }
+    
+    /// <summary>
     ///     Adds the result option to the root command.
     /// </summary>
     /// <param name="rootCommand">The root command receiving the option.</param>

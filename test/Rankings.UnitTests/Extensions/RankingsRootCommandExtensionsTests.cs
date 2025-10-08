@@ -3,7 +3,6 @@
 
 using Rankings.Extensions;
 using System.CommandLine;
-using System.Diagnostics;
 
 namespace Rankings.UnitTests.Extensions;
 
@@ -12,6 +11,30 @@ namespace Rankings.UnitTests.Extensions;
 /// </summary>
 public class RankingsRootCommandExtensionsTests
 {
+    /// <summary>
+    ///     Tests that the <see cref="RankingsRootCommandExtensions.AddFileOption" /> method correctly adds the
+    ///     result option to a root command.
+    /// </summary>
+    [Fact]
+    public void AddFileOption_AddsOptionToRootCommand()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        const string expectedOptionName = "--file";
+        string[] expectedOptionAliases = ["-f"];
+        
+        // Act
+        rootCommand.AddFileOption();
+        var option = rootCommand.Options.FirstOrDefault(o => o.Name == expectedOptionName);
+        
+        // Assert
+        Assert.NotNull(option);
+        Assert.Equal(expectedOptionName, option.Name);
+        Assert.Equal(expectedOptionAliases, option.Aliases);
+        Assert.NotNull(option.Description);
+        Assert.NotEmpty(option.Description);
+    }
+    
     /// <summary>
     ///     Tests that the <see cref="RankingsRootCommandExtensions.AddResultOption" /> method correctly adds the
     ///     result option to a root command.

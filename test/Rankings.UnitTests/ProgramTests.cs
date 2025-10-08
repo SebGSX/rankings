@@ -20,6 +20,7 @@ public class ProgramTests
             "--help",
             "--version",
             CommandLineOptions.ResultOption[0],
+            CommandLineOptions.FileOption[0]
         };
 
         // Act
