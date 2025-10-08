@@ -78,7 +78,7 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Imports a set of results from the specified file into the results file. Eeach result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. See help for the --result option for further information..
+        ///   Looks up a localized string similar to Imports a set of results from the specified file into the results file. Each result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. See help for the --result option for further information..
         /// </summary>
         internal static string FileOption_Description {
             get {

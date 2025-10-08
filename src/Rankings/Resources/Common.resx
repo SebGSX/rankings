@@ -49,7 +49,7 @@
         <value>A result must include scores for both contestants. Cannot find a score for contestant {0}.</value>
     </data>
     <data name="FileOption_Description" xml:space="preserve">
-        <value>Imports a set of results from the specified file into the results file. Eeach result must be in the form: "&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;". See help for the --result option for further information.</value>
+        <value>Imports a set of results from the specified file into the results file. Each result must be in the form: "&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;". See help for the --result option for further information.</value>
     </data>
     <data name="FileOption_Validation_FileDoesNotExist" xml:space="preserve">
         <value>The file specified does not exist.</value>
