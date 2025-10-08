@@ -15,7 +15,7 @@ public abstract class Program
     /// <summary>
     ///     Represents the root command of the application.
     /// </summary>
-    private static readonly RootCommand RootCommand = new(Common.RootCommand_Description);
+    private static RootCommand? _rootCommand;
     
     /// <summary>
     ///     The main entry point for the application.
@@ -23,15 +23,22 @@ public abstract class Program
     /// <param name="args">The command-line arguments.</param>
     public static void Main(string[] args)
     {
-        RootCommand.AddResultOption();
-        RootCommand.AddFileOption();
+        _rootCommand = new RootCommand(Common.RootCommand_Description);
+        _rootCommand.AddAppendFileSubcommand();
+        _rootCommand.AddAppendResultSubcommand();
+        _rootCommand.SetAction(_ => 0);
         
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
-        RootCommand.Parse(args).Invoke();
+        _rootCommand.Parse(args).Invoke();
     }
     
     /// <summary>
     ///     Gets the configured options for the application.
     /// </summary>
-    public static IList<Option> ConfiguredOptions => RootCommand.Options;
+    public static IEnumerable<string> ConfiguredOptions => _rootCommand.Options.Select(o => o.Name);
+    
+    /// <summary>
+    ///     Gets the configured subcommands for the application.
+    /// </summary>
+    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand.Subcommands.Select(s => s.Name);
 }

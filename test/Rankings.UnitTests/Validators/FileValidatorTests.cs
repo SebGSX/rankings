@@ -18,13 +18,13 @@ public class FileValidatorTests
     /// <param name="input">The input string to validate.</param>
     /// <param name="expected">The expected error message.</param>
     [Theory]
-    [InlineData("--file", "Required argument missing for option: '--file'.")]
-    [InlineData("--file \"none-existent.txt\"", "The file specified does not exist.")]
+    [InlineData("append-file --file", "Required argument missing for option: '--file'.")]
+    [InlineData("append-file --file \"none-existent.txt\"", "The file specified does not exist.")]
     public void Validate_WithError_AddsError(string input, string expected)
     {
         // Arrange
         var rootCommand = new RootCommand();
-        rootCommand.AddFileOption();
+        rootCommand.AddAppendFileSubcommand();
 
         // Act
         var parseResult = rootCommand.Parse(input);
