@@ -6,7 +6,7 @@ namespace Rankings;
 /// <summary>
 ///     Represents the command line subcommands.
 /// </summary>
-public abstract record CommandLineSubCommands
+public abstract record CommandLineSubcommands
 {
     /// <summary>
     ///     Represents the append-file subcommand used to append contestant results from a file.

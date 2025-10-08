@@ -18,10 +18,10 @@ public static class RankingsRootCommandExtensions
     /// </summary>
     /// <param name="rootCommand">The root command receiving the subcommand.</param>
     /// <returns>The root command with the configured subcommand added.</returns>
-    public static RootCommand AddAppendFileSubCommand(this RootCommand rootCommand)
+    public static RootCommand AddAppendFileSubcommand(this RootCommand rootCommand)
     {
         var appendFileCommand = new Command(
-            CommandLineSubCommands.AppendFile,
+            CommandLineSubcommands.AppendFile,
             Common.AppendFile_Subcommand_Description);
         
         var fileOption = new Option<FileInfo>(
@@ -43,10 +43,10 @@ public static class RankingsRootCommandExtensions
     /// </summary>
     /// <param name="rootCommand">The root command receiving the subcommand.</param>
     /// <returns>The root command with the configured subcommand added.</returns>
-    public static RootCommand AddAppendResultSubCommand(this RootCommand rootCommand)
+    public static RootCommand AddAppendResultSubcommand(this RootCommand rootCommand)
     {
         var appendResultCommand = new Command(
-            CommandLineSubCommands.AppendResult,
+            CommandLineSubcommands.AppendResult,
             Common.AppendResult_Subcommand_Description);
         
         var resultOption = new Option<string>(

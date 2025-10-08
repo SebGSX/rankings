@@ -57,7 +57,7 @@ public class ResultValidatorTests
     {
         // Arrange
         var rootCommand = new RootCommand();
-        rootCommand.AddAppendResultSubCommand();
+        rootCommand.AddAppendResultSubcommand();
 
         // Act
         var parseResult = rootCommand.Parse(input);

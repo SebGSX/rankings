@@ -15,7 +15,7 @@ public abstract class Program
     /// <summary>
     ///     Represents the root command of the application.
     /// </summary>
-    private static RootCommand _rootCommand;
+    private static RootCommand? _rootCommand;
     
     /// <summary>
     ///     The main entry point for the application.
@@ -24,8 +24,8 @@ public abstract class Program
     public static void Main(string[] args)
     {
         _rootCommand = new RootCommand(Common.RootCommand_Description);
-        _rootCommand.AddAppendFileSubCommand();
-        _rootCommand.AddAppendResultSubCommand();
+        _rootCommand.AddAppendFileSubcommand();
+        _rootCommand.AddAppendResultSubcommand();
         _rootCommand.SetAction(_ => 0);
         
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
@@ -40,5 +40,5 @@ public abstract class Program
     /// <summary>
     ///     Gets the configured subcommands for the application.
     /// </summary>
-    public static IEnumerable<string> ConfiguredSubCommands => _rootCommand.Subcommands.Select(s => s.Name);
+    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand.Subcommands.Select(s => s.Name);
 }

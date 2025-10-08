@@ -24,7 +24,7 @@ public class FileValidatorTests
     {
         // Arrange
         var rootCommand = new RootCommand();
-        rootCommand.AddAppendFileSubCommand();
+        rootCommand.AddAppendFileSubcommand();
 
         // Act
         var parseResult = rootCommand.Parse(input);

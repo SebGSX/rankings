@@ -33,21 +33,21 @@ public class ProgramTests
     ///     Tests that the <see cref="Program.Main"/> method configures the root command with the expected subcommands.
     /// </summary>
     [Fact]
-    public void Main_ConfiguresRootCommandWithExpectedSubCommands()
+    public void Main_ConfiguresRootCommandWithExpectedSubcommands()
     {
         // Arrange
-        var expectedSubCommands = new[]
+        var expectedSubcommands = new[]
         {
             "append-file",
             "append-result"
         };
 
         // Act
-        var subcommandsQuery = Program.ConfiguredSubCommands;
-        var actualSubCommands = subcommandsQuery.ToArray();
+        var subcommandsQuery = Program.ConfiguredSubcommands;
+        var actualSubcommands = subcommandsQuery.ToArray();
 
         // Assert
-        Assert.Equal(expectedSubCommands, actualSubCommands);
+        Assert.Equal(expectedSubcommands, actualSubcommands);
     }
     
     /// <summary>
