@@ -21,6 +21,11 @@ public class ResultParser
     ///     The character that separates a contestant's name from their score in an input string.
     /// </summary>
     private const string ContestantScoreSeparator = " ";
+    
+    /// <summary>
+    ///     Indicates that a value was not found when parsing.
+    /// </summary>
+    private const int NotFound = -1;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ResultParser" /> class with the specified input string.
@@ -49,13 +54,12 @@ public class ResultParser
          * for the same condition for each contestant result. While seemingly small, the cumulative performance impact
          * over a large input dataset can be significant depending on how the flags are used later in the processing.
          */
-        const int notFound = -1;
         var firstIndex = inputTrimmed.IndexOf(ContestantResultSeparator, StringComparison.InvariantCultureIgnoreCase);
         var lastIndex = inputTrimmed.LastIndexOf(ContestantResultSeparator, StringComparison.InvariantCultureIgnoreCase);
         
         #region Validate Basic Structure
         HasMultipleContestantResultSeparators = firstIndex != lastIndex;
-        IsMissingContestantResultSeparator = firstIndex == notFound;
+        IsMissingContestantResultSeparator = firstIndex == NotFound;
 
         if (HasMultipleContestantResultSeparators
             || IsMissingContestantResultSeparator)
@@ -93,14 +97,14 @@ public class ResultParser
         HasNoContestant2Result = lastIndex == inputTrimmed.Length - 1; // Separator is at the end.
 
         HasNoContestant1Name = string.IsNullOrWhiteSpace(contestant1Result.Name);
-        HasNoContestant1Score = contestant1Result.Score < 0;
+        HasNoContestant1Score = contestant1Result.Score == NotFound;
         HasNoContestant2Name = string.IsNullOrWhiteSpace(contestant2Result.Name);
-        HasNoContestant2Score = contestant2Result.Score < 0;
+        HasNoContestant2Score = contestant2Result.Score == NotFound;
         
         Contestant1Name = contestant1Result.Name;
-        Contestant1Score = contestant1Result.Score > 0 ? (ushort)contestant1Result.Score : (ushort)0;
+        Contestant1Score = contestant1Result.Score != NotFound ? (ushort)contestant1Result.Score : (ushort)0;
         Contestant2Name = contestant2Result.Name;
-        Contestant2Score = contestant2Result.Score > 0 ? (ushort)contestant2Result.Score : (ushort)0;
+        Contestant2Score = contestant2Result.Score != NotFound ? (ushort)contestant2Result.Score : (ushort)0;
         #endregion
     }
     
@@ -210,21 +214,20 @@ public class ResultParser
     /// </returns>
     private static (string Name, short Score) ParseContestantResult(string contestantResult)
     {
-        const short notFound = -1;
         var contestantLastSpaceIndex = contestantResult
             .LastIndexOf(ContestantScoreSeparator, StringComparison.InvariantCultureIgnoreCase);
         
         // If there's no space, either the name or score is missing.
-        if (contestantLastSpaceIndex == notFound)
+        if (contestantLastSpaceIndex == NotFound)
         {
             return short.TryParse(contestantResult, out var parsedOnlyScore)
                 ? (string.Empty, parsedOnlyScore) // Only the score is present.
-                : (contestantResult, notFound); // Only the name is present.
+                : (contestantResult, (short) NotFound); // Only the name is present.
         }
 
         // Try to parse the score from the remainder of the text; if it fails, return noScore.
         return short.TryParse(contestantResult[(contestantLastSpaceIndex + 1)..].Trim(), out var score)
             ? (contestantResult[..contestantLastSpaceIndex].Trim(), score) // Successfully parsed both name and score.
-            : (contestantResult, notFound); // Name is present, but score parsing failed.
+            : (contestantResult, (short) NotFound); // Name is present, but score parsing failed.
     }
 }

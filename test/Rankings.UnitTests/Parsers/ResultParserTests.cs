@@ -708,4 +708,60 @@ public class ResultParserTests
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
+    
+    /// <summary>
+    ///     Tests that the constructor sets all properties correctly when the input is valid.
+    /// </summary>
+    /// <param name="input">The input to parse.</param>
+    /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
+    /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
+    /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
+    /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
+    [Theory]
+    [InlineData(
+        $"Alice 0{ResultParser.ContestantResultSeparator} Bob 0",
+        "Alice",
+        0,
+        "Bob",
+        0)]
+    [InlineData(
+        $"Alice in Wonderland 0{ResultParser.ContestantResultSeparator} Bob the Builder 0",
+        "Alice in Wonderland",
+        0,
+        "Bob the Builder",
+        0)]
+    [InlineData(
+        $"Awesome FC 22{ResultParser.ContestantResultSeparator} Boresome FC 11",
+        "Awesome FC",
+        22,
+        "Boresome FC",
+        11)]
+    public void Ctor_WithValidInput_SetsAllPropertiesCorrectly(
+        string input,
+        string expectedContestant1Name,
+        ushort expectedContestant1Score,
+        string expectedContestant2Name,
+        ushort expectedContestant2Score)
+    {
+        // Act
+        var parser = new ResultParser(input);
+        
+        // Assert
+        Assert.False(parser.HasMultipleContestantResultSeparators);
+        Assert.False(parser.IsMissingContestantResultSeparator);
+        
+        Assert.False(parser.HasNoContestant1Name);
+        Assert.False(parser.HasNoContestant1Result);
+        Assert.False(parser.HasNoContestant1Score);
+        
+        Assert.False(parser.HasNoContestant2Name);
+        Assert.False(parser.HasNoContestant2Result);
+        Assert.False(parser.HasNoContestant2Score);
+        
+        Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
+        Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
+        
+        Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
+        Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
+    }
 }
