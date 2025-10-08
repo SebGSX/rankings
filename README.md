@@ -24,7 +24,81 @@ their respective terminals.
 
 ## Getting Started
 
-To run the app, please ensure that [.NET 9.0](https://dotnet.microsoft.com/download) is installed on your machine.
+To run the app, please ensure that [.NET 9.0 SDK](https://dotnet.microsoft.com/download) is installed.
+
+### Project Structure
+The project is structured as follows:
+
+```
+rankings/
+├── .github/
+│   ├── ISSUE_TEMPLATE/          # GitHub issue templates
+│   ├── workflows/               # GitHub Actions workflows
+├── src/
+│   ├── Rankings/                # Main application source code
+├── test/
+│   ├── Rankings.UnitTests/      # Unit tests for the application
+├── .gitignore                   # Git ignore file
+├── CODE_OF_CONDUCT.md           # Code of conduct
+├── CONTRIBUTING.md              # Contribution guidelines
+├── LICENSE                      # License file
+├── Rankings.sln                 # Solution file
+├── README.md                    # This readme file
+├── SECRET.md                    # Security policy
+```
+
+## Developing
+
+### AI Usage
+
+This project has been developed with the assistance of artificial intelligence (AI) tools, per the following:
+- **GitHub Copilot:** Used to assist with code generation and suggestions within the IDE, commit messages, pull request
+  descriptions, pull request reviews, and documentation.
+- **Grok:** Used to assist with research and code review using the [Tom Prompt](https://github.com/SebGSX/Prompt-Engineering/blob/main/prompt-engineering/pull-request-review.md).
+
+### Code Quality and Security
+
+Code quality is supported using a variety of tools, including:
+- **SonarQube Cloud:** Used to perform static code analysis and provide code quality and security reports.
+- **GitHub Security Tools:** See the [Security Tab](https://github.com/SebGSX/rankings/security) within the repo. 
+  Please note that CodeQL and Dependabot are enabled as is the secret scanning feature. Pull request reviews are
+  handled by the author and supported by GitHub Copilot. Branch protection rules require pull requests for merges to
+  the `main` branch, require checks to pass, and automatically request a review from GitHub Copilot.
+- **ReSharper:** Used to perform static code analysis and provide code quality suggestions within the IDE.
+- **Unit Tests:** The project is covered by unit tests using xUnit and Moq. Code coverage is reported to SonarQube
+  Cloud.
+
+### Building
+
+Provided that the .NET 9.0 SDK is installed, the project can be built from within an appropriate IDE such as Rider,
+VS Code, or Visual Studio, or from the command line at the project's root directory using:
+
+```shell
+dotnet build
+```
+
+### Running
+
+The project can be run from within an appropriate IDE or from the command line at `src/Rankings/bin/Debug/net9.0/`
+using the following command for Linux or macOS:
+
+```bash
+./rankings
+```
+
+Or the following command for Windows:
+
+```shell
+.\rankings
+```
+
+### Testing
+
+The unit tests can be run from within an appropriate IDE or from the command line at the project's root directory using:
+
+```shell
+dotnet test
+```
 
 ## Contributing
 
