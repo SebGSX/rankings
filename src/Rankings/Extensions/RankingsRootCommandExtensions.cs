@@ -14,12 +14,16 @@ namespace Rankings.Extensions;
 public static class RankingsRootCommandExtensions
 {
     /// <summary>
-    ///     Adds the file option to the root command.
+    ///     Adds the append file subcommand to the root command.
     /// </summary>
-    /// <param name="rootCommand">The root command receiving the option.</param>
-    /// <returns>The root command with the option added.</returns>
-    public static RootCommand AddFileOption(this RootCommand rootCommand)
+    /// <param name="rootCommand">The root command receiving the subcommand.</param>
+    /// <returns>The root command with the configured subcommand added.</returns>
+    public static RootCommand AddAppendFileSubCommand(this RootCommand rootCommand)
     {
+        var appendFileCommand = new Command(
+            CommandLineSubCommands.AppendFile,
+            Common.AppendFile_Subcommand_Description);
+        
         var fileOption = new Option<FileInfo>(
             name: CommandLineOptions.FileOption[0],
             aliases: CommandLineOptions.FileOption[1..])
@@ -28,18 +32,23 @@ public static class RankingsRootCommandExtensions
             Validators = { FileValidator.Validate() }
         };
         
-        rootCommand.Options.Add(fileOption);
+        appendFileCommand.Add(fileOption);
+        rootCommand.Add(appendFileCommand);
         
         return rootCommand;
     }
     
     /// <summary>
-    ///     Adds the result option to the root command.
+    ///     Adds the append result subcommand to the root command.
     /// </summary>
-    /// <param name="rootCommand">The root command receiving the option.</param>
-    /// <returns>The root command with the option added.</returns>
-    public static RootCommand AddResultOption(this RootCommand rootCommand)
+    /// <param name="rootCommand">The root command receiving the subcommand.</param>
+    /// <returns>The root command with the configured subcommand added.</returns>
+    public static RootCommand AddAppendResultSubCommand(this RootCommand rootCommand)
     {
+        var appendResultCommand = new Command(
+            CommandLineSubCommands.AppendResult,
+            Common.AppendResult_Subcommand_Description);
+        
         var resultOption = new Option<string>(
             name: CommandLineOptions.ResultOption[0],
             aliases: CommandLineOptions.ResultOption[1..])
@@ -48,7 +57,8 @@ public static class RankingsRootCommandExtensions
             Validators = { ResultValidator.Validate() }
         };
         
-        rootCommand.Options.Add(resultOption);
+        appendResultCommand.Add(resultOption);
+        rootCommand.Add(appendResultCommand);
         
         return rootCommand;
     }

@@ -18,17 +18,36 @@ public class ProgramTests
         var expectedOptions = new[]
         {
             "--help",
-            "--version",
-            CommandLineOptions.ResultOption[0],
-            CommandLineOptions.FileOption[0]
+            "--version"
         };
 
         // Act
-        var optionsQuery = Program.ConfiguredOptions.Select(o => o.Name);
+        var optionsQuery = Program.ConfiguredOptions;
         var actualOptions = optionsQuery.ToArray();
 
         // Assert
         Assert.Equal(expectedOptions, actualOptions);
+    }
+    
+    /// <summary>
+    ///     Tests that the <see cref="Program.Main"/> method configures the root command with the expected subcommands.
+    /// </summary>
+    [Fact]
+    public void Main_ConfiguresRootCommandWithExpectedSubCommands()
+    {
+        // Arrange
+        var expectedSubCommands = new[]
+        {
+            "append-file",
+            "append-result"
+        };
+
+        // Act
+        var subcommandsQuery = Program.ConfiguredSubCommands;
+        var actualSubCommands = subcommandsQuery.ToArray();
+
+        // Assert
+        Assert.Equal(expectedSubCommands, actualSubCommands);
     }
     
     /// <summary>

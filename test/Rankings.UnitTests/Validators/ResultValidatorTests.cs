@@ -19,45 +19,45 @@ public class ResultValidatorTests
     /// <param name="input">The input string to validate.</param>
     /// <param name="expected">The expected error message.</param>
     [Theory]
-    [InlineData("--result", "Required argument missing for option: '--result'.")]
+    [InlineData("append-result --result", "Required argument missing for option: '--result'.")]
     [InlineData(
-        "--result \"1\n2\"",
+        "append-result --result \"1\n2\"",
         "A result must not contain any line breaks, it must be a single line.")]
     [InlineData(
-        "--result \"1\r2\"",
+        "append-result --result \"1\r2\"",
         "A result must not contain any line breaks, it must be a single line.")]
     [InlineData(
-        "--result \"1\r\n2\"",
+        "append-result --result \"1\r\n2\"",
         "A result must not contain any line breaks, it must be a single line.")]
     [InlineData(
-        $"--result \"1{ResultParser.ContestantResultSeparator}2{ResultParser.ContestantResultSeparator}3\"",
+        $"append-result --result \"1{ResultParser.ContestantResultSeparator}2{ResultParser.ContestantResultSeparator}3\"",
         $"A result can only contain one {ResultParser.ContestantResultSeparator} symbol.")]
     [InlineData(
-        "--result \"12345\"",
+        "append-result --result \"12345\"",
         $"A result must be separated into two parts by the {ResultParser.ContestantResultSeparator} symbol; one part for each contestant's name and score.")]
     [InlineData(
-        $"--result \"{ResultParser.ContestantResultSeparator} Bob 20\"",
+        $"append-result --result \"{ResultParser.ContestantResultSeparator} Bob 20\"",
         "A result must include the results for both contestants. Cannot find a result for contestant 1.")]
     [InlineData(
-        $"--result \"Alice 10{ResultParser.ContestantResultSeparator}\"",
+        $"append-result --result \"Alice 10{ResultParser.ContestantResultSeparator}\"",
         "A result must include the results for both contestants. Cannot find a result for contestant 2.")]
     [InlineData(
-        $"--result \"10{ResultParser.ContestantResultSeparator} Bob 20\"",
+        $"append-result --result \"10{ResultParser.ContestantResultSeparator} Bob 20\"",
         "A result must include names for both contestants. Cannot find a name for contestant 1.")]
     [InlineData(
-        $"--result \"Alice{ResultParser.ContestantResultSeparator} Bob 20\"",
+        $"append-result --result \"Alice{ResultParser.ContestantResultSeparator} Bob 20\"",
         "A result must include scores for both contestants. Cannot find a score for contestant 1.")]
     [InlineData(
-        $"--result \"Alice 10{ResultParser.ContestantResultSeparator}20\"",
+        $"append-result --result \"Alice 10{ResultParser.ContestantResultSeparator}20\"",
         "A result must include names for both contestants. Cannot find a name for contestant 2.")]
     [InlineData(
-        $"--result \"Alice 10{ResultParser.ContestantResultSeparator} Bob\"",
+        $"append-result --result \"Alice 10{ResultParser.ContestantResultSeparator} Bob\"",
         "A result must include scores for both contestants. Cannot find a score for contestant 2.")]
     public void Validate_WithError_AddsError(string input, string expected)
     {
         // Arrange
         var rootCommand = new RootCommand();
-        rootCommand.AddResultOption();
+        rootCommand.AddAppendResultSubCommand();
 
         // Act
         var parseResult = rootCommand.Parse(input);

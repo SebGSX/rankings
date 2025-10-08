@@ -12,50 +12,48 @@ namespace Rankings.UnitTests.Extensions;
 public class RankingsRootCommandExtensionsTests
 {
     /// <summary>
-    ///     Tests that the <see cref="RankingsRootCommandExtensions.AddFileOption" /> method correctly adds the
-    ///     result option to a root command.
+    ///     Tests that the <see cref="RankingsRootCommandExtensions.AddAppendFileSubCommand" /> method correctly adds
+    ///     the append-result subcommand to a root command.
     /// </summary>
     [Fact]
-    public void AddFileOption_AddsOptionToRootCommand()
+    public void AddAppendFileSubCommand_AddsOptionToRootCommand()
     {
         // Arrange
         var rootCommand = new RootCommand();
-        const string expectedOptionName = "--file";
-        string[] expectedOptionAliases = ["-f"];
+        const string expectedSubCommandName = "append-file";
         
         // Act
-        rootCommand.AddFileOption();
-        var option = rootCommand.Options.FirstOrDefault(o => o.Name == expectedOptionName);
+        rootCommand.AddAppendFileSubCommand();
+        var subcommand = rootCommand
+            .Subcommands.FirstOrDefault(o => o.Name == expectedSubCommandName);
         
         // Assert
-        Assert.NotNull(option);
-        Assert.Equal(expectedOptionName, option.Name);
-        Assert.Equal(expectedOptionAliases, option.Aliases);
-        Assert.NotNull(option.Description);
-        Assert.NotEmpty(option.Description);
+        Assert.NotNull(subcommand);
+        Assert.Equal(expectedSubCommandName, subcommand.Name);
+        Assert.NotNull(subcommand.Description);
+        Assert.NotEmpty(subcommand.Description);
     }
     
     /// <summary>
-    ///     Tests that the <see cref="RankingsRootCommandExtensions.AddResultOption" /> method correctly adds the
+    ///     Tests that the <see cref="RankingsRootCommandExtensions.AddAppendResultSubCommand" /> method correctly adds the
     ///     result option to a root command.
     /// </summary>
     [Fact]
-    public void AddResultOption_AddsOptionToRootCommand()
+    public void AddAppendResultSubCommand_AddsOptionToRootCommand()
     {
         // Arrange
         var rootCommand = new RootCommand();
-        const string expectedOptionName = "--result";
-        string[] expectedOptionAliases = ["-r"];
+        const string expectedSubCommandName = "append-result";
         
         // Act
-        rootCommand.AddResultOption();
-        var option = rootCommand.Options.FirstOrDefault(o => o.Name == expectedOptionName);
+        rootCommand.AddAppendResultSubCommand();
+        var subcommand = rootCommand
+            .Subcommands.FirstOrDefault(o => o.Name == expectedSubCommandName);
         
         // Assert
-        Assert.NotNull(option);
-        Assert.Equal(expectedOptionName, option.Name);
-        Assert.Equal(expectedOptionAliases, option.Aliases);
-        Assert.NotNull(option.Description);
-        Assert.NotEmpty(option.Description);
+        Assert.NotNull(subcommand);
+        Assert.Equal(expectedSubCommandName, subcommand.Name);
+        Assert.NotNull(subcommand.Description);
+        Assert.NotEmpty(subcommand.Description);
     }
 }

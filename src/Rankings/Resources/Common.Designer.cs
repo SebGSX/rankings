@@ -60,6 +60,24 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appends a set of contest results from a file into the results file..
+        /// </summary>
+        internal static string AppendFile_Subcommand_Description {
+            get {
+                return ResourceManager.GetString("AppendFile_Subcommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appends a single contest result to the results file..
+        /// </summary>
+        internal static string AppendResult_Subcommand_Description {
+            get {
+                return ResourceManager.GetString("AppendResult_Subcommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value cannot contain a new line..
         /// </summary>
         internal static string CannotContainNewLine {
@@ -78,7 +96,7 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Imports a set of results from the specified file into the results file. Each result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. See help for the --result option for further information..
+        ///   Looks up a localized string similar to Imports a set of contest results from the specified file into the results file. Each result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. See help for the append-result command for further information..
         /// </summary>
         internal static string FileOption_Description {
             get {
@@ -92,15 +110,6 @@ namespace Rankings.Resources {
         internal static string FileOption_Validation_FileDoesNotExist {
             get {
                 return ResourceManager.GetString("FileOption_Validation_FileDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file specified is empty..
-        /// </summary>
-        internal static string FileOption_Validation_FileIsEmpty {
-            get {
-                return ResourceManager.GetString("FileOption_Validation_FileIsEmpty", resourceCulture);
             }
         }
         
