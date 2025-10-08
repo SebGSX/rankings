@@ -34,7 +34,7 @@ public abstract class FileValidator
              */
             var validations = new List<(bool IsError, string ErrorMessage)>
             {
-                (!fileExists, string.Format(Common.FileOption_Validation_FileDoesNotExist, fileInfo.FullName))
+                (!fileExists, Common.FileOption_Validation_FileDoesNotExist)
             };
             
             foreach (var (isError, errorMessage) in validations)
