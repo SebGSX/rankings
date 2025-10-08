@@ -9,8 +9,31 @@ namespace Rankings.UnitTests;
 public class ProgramTests
 {
     /// <summary>
+    ///     Tests that the <see cref="Program.Main"/> method configures the root command with the expected options.
+    /// </summary>
+    [Fact]
+    public void Main_ConfiguresRootCommandWithExpectedOptions()
+    {
+        // Arrange
+        var expectedOptions = new[]
+        {
+            "--help",
+            "--version",
+            CommandLineOptions.ResultOption[0],
+        };
+
+        // Act
+        var optionsQuery = Program.ConfiguredOptions.Select(o => o.Name);
+        var actualOptions = optionsQuery.ToArray();
+
+        // Assert
+        Assert.Equal(expectedOptions, actualOptions);
+    }
+    
+    /// <summary>
     ///     Tests that the <see cref="Program.Main"/> method displays help when called with the "--help" argument.
     /// </summary>
+    /// <param name="arg">The help argument to test.</param>
     [Theory]
     [InlineData("-?")]
     [InlineData("-h")]

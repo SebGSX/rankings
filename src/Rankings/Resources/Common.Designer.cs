@@ -60,6 +60,87 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value cannot contain a new line..
+        /// </summary>
+        internal static string CannotContainNewLine {
+            get {
+                return ResourceManager.GetString("CannotContainNewLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be empty or white-space..
+        /// </summary>
+        internal static string EmptyOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("EmptyOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a single contest result to the results file. A result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. Replace &lt;CONTESTANT-n&gt; with the contestants&apos; names such as, Team One, Team Two, etc. Names cannot start with - or --, and they cannot include the {0} symbol. Scores must be non-negative, whole numbers without any separator symbols, which means for example that 1000 is appropriate but 1,000 is not. Example: rankings -r &quot;My Team 1{0} Other Team 0&quot;.
+        /// </summary>
+        internal static string ResultOption_Description {
+            get {
+                return ResourceManager.GetString("ResultOption_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must be separated into two parts by the {0} symbol; one part for each contestant&apos;s name and score..
+        /// </summary>
+        internal static string ResultOption_Validation_MissingContestantResultSeparator {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_MissingContestantResultSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result can only contain one {0} symbol..
+        /// </summary>
+        internal static string ResultOption_Validation_MultipleContestantResultSeparators {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_MultipleContestantResultSeparators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must not contain any line breaks, it must be a single line..
+        /// </summary>
+        internal static string ResultOption_Validation_NewLineWithinContestantResult {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_NewLineWithinContestantResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include names for both contestants. Cannot find a name for contestant {0}..
+        /// </summary>
+        internal static string ResultOption_Validation_NoContestantName {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_NoContestantName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include the results for both contestants. Cannot find a result for contestant {0}..
+        /// </summary>
+        internal static string ResultOption_Validation_NoContestantResult {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_NoContestantResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include scores for both contestants. Cannot find a score for contestant {0}..
+        /// </summary>
+        internal static string ResultOption_Validation_NoContestantScore {
+            get {
+                return ResourceManager.GetString("ResultOption_Validation_NoContestantScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generate a ranking table..
         /// </summary>
         internal static string RootCommand_Description {
