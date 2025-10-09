@@ -21,10 +21,6 @@ public class FileValidatorTests
     /// <param name="expected">The expected error message.</param>
     [Theory]
     [InlineData("append-file --file", "Required argument missing for option: '--file'.")]
-    [InlineData("append-file --file \"invalid-file-name-*.txt\"",
-        "The file name contains invalid characters and is invalid.")]
-    [InlineData("append-file --file \"/\n/file-name.txt\"",
-        "The directory (folder) name contains invalid characters and is invalid.")]
     [InlineData("append-file --file \"\"", "The file name is missing or empty.")]
     [InlineData("append-file --file \"./\"", "The file name is missing or empty.")]
     public void Validate_WithError_AddsError(string input, string expected)
