@@ -19,7 +19,7 @@
 
 ## Overview
 
-The `rankings` command-line app is a small, self-contained rankings app that runs on Windows, Linux, and macOS within 
+The `rankings` command-line app is a small, self-contained rankings app that runs on Windows, Linux, and macOS within
 their respective terminals.
 
 ## Getting Started
@@ -33,6 +33,7 @@ The project is hosted on GitHub within the [Rankings Project](https://github.com
 > *Note:* The project uses a simple Kanban board with user and enabler stories to track progress.
 
 ### Project Structure
+
 The project is structured as follows:
 
 ```
@@ -64,13 +65,16 @@ rankings/
 ### AI Usage
 
 This project has been developed with the assistance of artificial intelligence (AI) tools, per the following:
+
 - **GitHub Copilot:** Used to assist with code generation and suggestions within the IDE, commit messages, pull request
   descriptions, pull request reviews, and documentation.
-- **Grok:** Used to assist with research and code review using the [Tom Prompt](https://github.com/SebGSX/Prompt-Engineering/blob/main/prompt-engineering/pull-request-review.md).
+- **Grok:** Used to assist with research and code review using
+  the [Tom Prompt](https://github.com/SebGSX/Prompt-Engineering/blob/main/prompt-engineering/pull-request-review.md).
 
 ### Sample Data
 
 Sample data files should be created for local testing purposes including the following:
+
 - `empty-file.txt`: An empty file.
 - `invalid-data.txt`: A file containing invalid data.
 - `sample-data.txt`: A file containing valid data.
@@ -80,8 +84,9 @@ Sample data files should be created for local testing purposes including the fol
 ### Code Quality and Security
 
 Code quality is supported using a variety of tools, including:
+
 - **SonarQube Cloud:** Used to perform static code analysis and provide code quality and security reports.
-- **GitHub Security Tools:** See the [Security Tab](https://github.com/SebGSX/rankings/security) within the repo. 
+- **GitHub Security Tools:** See the [Security Tab](https://github.com/SebGSX/rankings/security) within the repo.
   Please note that CodeQL and Dependabot are enabled as is the secret scanning feature. Pull request reviews are
   handled by the author and supported by GitHub Copilot. Branch protection rules require pull requests for merges to
   the `main` branch, require checks to pass, and automatically request a review from GitHub Copilot.

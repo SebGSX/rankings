@@ -19,7 +19,17 @@ public abstract class Program
     ///     Represents the root command of the application.
     /// </summary>
     private static RootCommand? _rootCommand;
-    
+
+    /// <summary>
+    ///     Gets the configured options for the application.
+    /// </summary>
+    public static IEnumerable<string> ConfiguredOptions => _rootCommand!.Options.Select(o => o.Name);
+
+    /// <summary>
+    ///     Gets the configured subcommands for the application.
+    /// </summary>
+    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand!.Subcommands.Select(s => s.Name);
+
     /// <summary>
     ///     The main entry point for the application.
     /// </summary>
@@ -34,26 +44,16 @@ public abstract class Program
         {
             options.FilePath = "contest-results.jsonl";
         });
-        
+
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        
+
         _rootCommand = new RootCommand(Common.RootCommand_Description);
         _rootCommand.AddAppendFileSubcommand(serviceProvider);
         _rootCommand.AddAppendResultSubcommand(serviceProvider);
         _rootCommand.AddClearContestResultsSubcommand(serviceProvider);
         _rootCommand.SetAction(_ => 0);
-        
+
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
         _rootCommand.Parse(args).Invoke();
     }
-    
-    /// <summary>
-    ///     Gets the configured options for the application.
-    /// </summary>
-    public static IEnumerable<string> ConfiguredOptions => _rootCommand!.Options.Select(o => o.Name);
-    
-    /// <summary>
-    ///     Gets the configured subcommands for the application.
-    /// </summary>
-    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand!.Subcommands.Select(s => s.Name);
 }

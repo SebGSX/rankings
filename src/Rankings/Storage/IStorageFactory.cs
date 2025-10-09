@@ -14,7 +14,7 @@ public interface IStorageFactory
     /// <param name="fullName">The full name of the file backing the store.</param>
     /// <returns>A read only store backed by the specified file.</returns>
     public IReadOnlyStore CreateFileReadOnlyStore(string fullName);
-    
+
     /// <summary>
     ///     Creates a read/write store backed by the file with the specified full name.
     /// </summary>

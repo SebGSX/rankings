@@ -16,7 +16,7 @@ public class FileReadOnlyStore : IReadOnlyStore
     ///     Represents the file information for the backing file.
     /// </summary>
     protected readonly FileInfo FileInfo;
-    
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="FileReadOnlyStore" /> class.
     /// </summary>

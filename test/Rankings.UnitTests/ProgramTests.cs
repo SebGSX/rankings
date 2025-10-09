@@ -4,12 +4,12 @@
 namespace Rankings.UnitTests;
 
 /// <summary>
-///     Unit tests for the <see cref="Program"/> class.
+///     Unit tests for the <see cref="Program" /> class.
 /// </summary>
 public class ProgramTests
 {
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> configures the root command with the expected options.
+    ///     Tests that <see cref="Program.Main" /> configures the root command with the expected options.
     /// </summary>
     [Fact]
     public void Main_ConfiguresRootCommandWithExpectedOptions()
@@ -28,9 +28,9 @@ public class ProgramTests
         // Assert
         Assert.Equal(expectedOptions, actualOptions);
     }
-    
+
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> configures the root command with the expected subcommands.
+    ///     Tests that <see cref="Program.Main" /> configures the root command with the expected subcommands.
     /// </summary>
     [Fact]
     public void Main_ConfiguresRootCommandWithExpectedSubcommands()
@@ -50,9 +50,9 @@ public class ProgramTests
         // Assert
         Assert.Equal(expectedSubcommands, actualSubcommands);
     }
-    
+
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> displays help when called with the "--help" argument.
+    ///     Tests that <see cref="Program.Main" /> displays help when called with the "--help" argument.
     /// </summary>
     /// <param name="arg">The help argument to test.</param>
     [Theory]
@@ -73,13 +73,13 @@ public class ProgramTests
 
         // Assert
         Assert.Contains(expected, actual);
-        
+
         // Cleanup
         Console.SetOut(originalOut);
     }
-    
+
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> displays an error message when called with an invalid
+    ///     Tests that <see cref="Program.Main" /> displays an error message when called with an invalid
     ///     argument.
     /// </summary>
     [Fact]
@@ -98,13 +98,13 @@ public class ProgramTests
 
         // Assert
         Assert.Contains(expected, actual);
-        
+
         // Cleanup
         Console.SetError(originalError);
     }
-    
+
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> succeeds when called with no arguments.
+    ///     Tests that <see cref="Program.Main" /> succeeds when called with no arguments.
     /// </summary>
     [Fact]
     public void Main_WithNoArguments_Succeeds()
@@ -118,10 +118,10 @@ public class ProgramTests
         // Act
         Program.Main(args);
         var actual = sw.ToString();
-        
+
         // Assert
         Assert.Empty(actual);
-        
+
         // Cleanup
         Console.SetError(originalError);
     }

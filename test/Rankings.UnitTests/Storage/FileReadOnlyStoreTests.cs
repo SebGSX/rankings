@@ -21,7 +21,7 @@ public class FileReadOnlyStoreTests
 
         // Act
         var exception = Record.Exception(() => new FileReadOnlyStore(fullName));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<ArgumentNullException>(exception);
@@ -36,16 +36,16 @@ public class FileReadOnlyStoreTests
     {
         // Arrange
         const string fullName = "";
-        
+
         // Act
         var exception = Record.Exception(() => new FileReadOnlyStore(fullName));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<ArgumentException>(exception);
         Assert.Equal("fullName", ((ArgumentException)exception).ParamName);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor instantiates the object when the input is a valid file name.
     /// </summary>
@@ -54,10 +54,10 @@ public class FileReadOnlyStoreTests
     {
         // Arrange
         const string fullName = "validFileName.txt";
-        
+
         // Act
         var actual = new FileReadOnlyStore(fullName);
-        
+
         // Assert
         Assert.NotNull(actual);
     }

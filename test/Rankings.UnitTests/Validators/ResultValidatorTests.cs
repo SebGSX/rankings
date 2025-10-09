@@ -64,12 +64,12 @@ public class ResultValidatorTests
 
         // Act
         var parseResult = rootCommand.Parse(input);
-        
+
         // Assert
         Assert.Single(parseResult.Errors);
         Assert.Equal(expected, parseResult.Errors[0].Message);
     }
-    
+
     /// <summary>
     ///     Tests that <see cref="ResultValidator.Validate" /> does not add an error to the parse result when the input
     ///     is valid.
@@ -81,11 +81,12 @@ public class ResultValidatorTests
         var rootCommand = new RootCommand();
         var serviceProviderMockObject = Mock.Of<IServiceProvider>();
         rootCommand.AddAppendResultSubcommand(serviceProviderMockObject);
-        const string input = $"append-result --result \"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20\"";
+        const string input =
+            $"append-result --result \"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20\"";
 
         // Act
         var parseResult = rootCommand.Parse(input);
-        
+
         // Assert
         Assert.Empty(parseResult.Errors);
     }
