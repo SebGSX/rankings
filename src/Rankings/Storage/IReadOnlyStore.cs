@@ -9,6 +9,14 @@ namespace Rankings.Storage;
 public interface IReadOnlyStore
 {
     /// <summary>
+    ///     Indicates whether the store has been initialized.
+    /// </summary>
+    /// <returns>
+    ///     <c>True</c> if the store has been initialized; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsInitialized { get; }
+    
+    /// <summary>
     ///     Reads all lines of text from the store.
     /// </summary>
     /// <returns>An array containing all lines of text from the store.</returns>

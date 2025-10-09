@@ -32,24 +32,18 @@ public class FileStore : FileReadOnlyStore, IStore
         // Any exception thrown bubbles up to be handled by the caller.
         File.AppendAllLines(FileInfo.FullName, lines);
     }
-    
-    /// <summary>
-    ///     Creates the file at the specified path if it does not already exist.
-    /// </summary>
-    /// <param name="fileInfo">The file information for the backing file.</param>
-    /// <returns>
-    ///     <c>True</c> if the file was created; otherwise, <c>false</c>.
-    /// </returns>
+
+    /// <inheritdoc />
     /// <remarks>
     ///     Exceptions are not caught and bubble up to be handled by the caller, which facilitates testing.
     /// </remarks>
     [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
-    public virtual void CreateIfNotExists(FileInfo fileInfo)
+    public void Initialize()
     {
         // Any exception thrown bubbles up to be handled by the caller.
-        if (fileInfo.Exists) return;
+        if (FileInfo.Exists) return;
 
-        using (fileInfo.Create())
+        using (FileInfo.Create())
         {
             // Just create, then dispose of the file handle.
         }

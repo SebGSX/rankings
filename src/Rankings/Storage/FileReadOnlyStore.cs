@@ -31,7 +31,27 @@ public class FileReadOnlyStore : IReadOnlyStore
         ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
         FileInfo = new FileInfo(fullName);
     }
-    
+
+    /// <inheritdoc />
+    /// <remarks>
+    ///     Exceptions are swallowed and <c>false</c> is returned if any are thrown,
+    /// </remarks>
+    [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
+    public bool IsInitialized
+    {
+        get
+        {
+            try
+            {
+                return FileInfo.Exists;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+    }
+
     /// <inheritdoc />
     /// <remarks>
     ///     Exceptions are not caught and bubble up to be handled by the caller, which facilitates testing.

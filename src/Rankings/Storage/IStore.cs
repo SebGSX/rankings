@@ -12,4 +12,9 @@ public interface IStore : IReadOnlyStore
     ///     Appends all lines of text to the store.
     /// </summary>
     public void AppendAllLines(string[] lines);
+    
+    /// <summary>
+    ///     Initializes the store, creating any backing resources if they do not already exist.
+    /// </summary>
+    public void Initialize();
 }
