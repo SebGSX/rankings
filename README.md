@@ -42,6 +42,12 @@ rankings/
 │   ├── workflows/               # GitHub Actions workflows
 ├── src/
 │   ├── Rankings/                # Main application source code
+│   │   ├── Extensions/          # Extension methods used to configure the application
+│   │   ├── Parsers/             # Parsers for command-line arguments as well as file content
+│   │   ├── Resources/           # Embedded resources such as localized, reusable strings
+│   │   ├── Services/            # Services used by the application
+│   │   ├── Storage/             # Storage implementations (file-based)
+│   │   ├── Validators/          # Validators for command-line arguments
 ├── test/
 │   ├── Rankings.UnitTests/      # Unit tests for the application
 ├── .gitignore                   # Git ignore file
@@ -61,6 +67,15 @@ This project has been developed with the assistance of artificial intelligence (
 - **GitHub Copilot:** Used to assist with code generation and suggestions within the IDE, commit messages, pull request
   descriptions, pull request reviews, and documentation.
 - **Grok:** Used to assist with research and code review using the [Tom Prompt](https://github.com/SebGSX/Prompt-Engineering/blob/main/prompt-engineering/pull-request-review.md).
+
+### Sample Data
+
+Sample data files should be created for local testing purposes including the following:
+- `empty-file.txt`: An empty file.
+- `invalid-data.txt`: A file containing invalid data.
+- `sample-data.txt`: A file containing valid data.
+
+> *Note:* Sample data is not provided in the repo and the `.gitignore` file excludes `[Ss]ampleData/`.
 
 ### Code Quality and Security
 

@@ -31,6 +31,12 @@ public class ResultParser
     ///     Initializes a new instance of the <see cref="ResultParser" /> class with the specified input string.
     /// </summary>
     /// <param name="input">The input to parse for contestant results.</param>
+    /// <exception cref="ArgumentNullException">
+    ///     Thrown if <paramref name="input" /> is <see langword="null" />.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     Thrown if <paramref name="input" /> is empty, consists only of whitespace, or contains new line characters.
+    /// </exception>
     public ResultParser(string input)
     {
         ArgumentNullException.ThrowIfNull(input);

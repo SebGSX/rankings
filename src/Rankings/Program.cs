@@ -2,8 +2,10 @@
 // Published under the MIT License.
 
 using System.CommandLine;
+using Microsoft.Extensions.DependencyInjection;
 using Rankings.Extensions;
 using Rankings.Resources;
+using Rankings.Storage;
 
 namespace Rankings;
 
@@ -23,9 +25,14 @@ public abstract class Program
     /// <param name="args">The command-line arguments.</param>
     public static void Main(string[] args)
     {
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddScoped<IStorageFactory, StorageFactory>();
+        
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        
         _rootCommand = new RootCommand(Common.RootCommand_Description);
-        _rootCommand.AddAppendFileSubcommand();
-        _rootCommand.AddAppendResultSubcommand();
+        _rootCommand.AddAppendFileSubcommand(serviceProvider);
+        _rootCommand.AddAppendResultSubcommand(serviceProvider);
         _rootCommand.SetAction(_ => 0);
         
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
@@ -35,10 +42,10 @@ public abstract class Program
     /// <summary>
     ///     Gets the configured options for the application.
     /// </summary>
-    public static IEnumerable<string> ConfiguredOptions => _rootCommand.Options.Select(o => o.Name);
+    public static IEnumerable<string> ConfiguredOptions => _rootCommand!.Options.Select(o => o.Name);
     
     /// <summary>
     ///     Gets the configured subcommands for the application.
     /// </summary>
-    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand.Subcommands.Select(s => s.Name);
+    public static IEnumerable<string> ConfiguredSubcommands => _rootCommand!.Subcommands.Select(s => s.Name);
 }

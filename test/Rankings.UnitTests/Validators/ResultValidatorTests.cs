@@ -2,6 +2,7 @@
 // Published under the MIT License.
 
 using System.CommandLine;
+using Moq;
 using Rankings.Extensions;
 using Rankings.Parsers;
 using Rankings.Validators;
@@ -14,7 +15,8 @@ namespace Rankings.UnitTests.Validators;
 public class ResultValidatorTests
 {
     /// <summary>
-    ///     Tests that the validator adds an error when the input is invalid.
+    ///     Tests that <see cref="ResultValidator.Validate" /> adds an error to the parse result when the input is
+    ///     invalid.
     /// </summary>
     /// <param name="input">The input string to validate.</param>
     /// <param name="expected">The expected error message.</param>
@@ -57,7 +59,8 @@ public class ResultValidatorTests
     {
         // Arrange
         var rootCommand = new RootCommand();
-        rootCommand.AddAppendResultSubcommand();
+        var serviceProviderMockObject = Mock.Of<IServiceProvider>();
+        rootCommand.AddAppendResultSubcommand(serviceProviderMockObject);
 
         // Act
         var parseResult = rootCommand.Parse(input);
@@ -65,5 +68,25 @@ public class ResultValidatorTests
         // Assert
         Assert.Single(parseResult.Errors);
         Assert.Equal(expected, parseResult.Errors[0].Message);
+    }
+    
+    /// <summary>
+    ///     Tests that <see cref="ResultValidator.Validate" /> does not add an error to the parse result when the input
+    ///     is valid.
+    /// </summary>
+    [Fact]
+    public void Validate_WithoutError_DoesNotAddError()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        var serviceProviderMockObject = Mock.Of<IServiceProvider>();
+        rootCommand.AddAppendResultSubcommand(serviceProviderMockObject);
+        const string input = $"append-result --result \"Alice 10{ResultParser.ContestantResultSeparator} Bob 20\"";
+
+        // Act
+        var parseResult = rootCommand.Parse(input);
+        
+        // Assert
+        Assert.Empty(parseResult.Errors);
     }
 }

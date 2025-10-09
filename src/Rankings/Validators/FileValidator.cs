@@ -20,21 +20,23 @@ public abstract class FileValidator
     {
         return result =>
         {
+            const int notFound = -1;
+            
             // The result should never be null.
             Debug.Assert(result != null);
-            Debug.Assert(result.GetValueOrDefault<FileInfo>() != null);
+            Debug.Assert(result.GetValueOrDefault<string>() != null);
             
-            var fileInfo = result.GetValueOrDefault<FileInfo>();
-            var fileExists = fileInfo.Exists;
+            var fileInfo = new FileInfo(result.GetValueOrDefault<string>());
+            var hasFileName = !string.IsNullOrWhiteSpace(fileInfo.Name);
+            var hasDirectoryName = !string.IsNullOrWhiteSpace(fileInfo.DirectoryName);
             
-            /*
-             * Identify validation errors in the order they should be reported.
-             * While only one validation is currently performed, this structure follows the established pattern and
-             * provides for extension in the future with minimal effort.
-             */
+            // Identify validation errors in the order they should be reported.
             var validations = new List<(bool IsError, string ErrorMessage)>
             {
-                (!fileExists, Common.FileOption_Validation_FileDoesNotExist)
+                (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
+                    Common.FileOption_Validation_InvalidFileName),
+                (hasDirectoryName && fileInfo.DirectoryName!.IndexOfAny(Path.GetInvalidPathChars()) != notFound,
+                    Common.FileOption_Validation_InvalidDirectoryName),
             };
             
             foreach (var (isError, errorMessage) in validations)

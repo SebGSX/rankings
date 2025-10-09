@@ -3,6 +3,7 @@
 
 using Rankings.Extensions;
 using System.CommandLine;
+using Moq;
 
 namespace Rankings.UnitTests.Extensions;
 
@@ -16,14 +17,15 @@ public class RankingsRootCommandExtensionsTests
     ///     the append-file subcommand to a root command.
     /// </summary>
     [Fact]
-    public void AddAppendFileSubcommand_AddsOptionToRootCommand()
+    public void AddAppendFileSubcommand_AddsSubcommandToRootCommand()
     {
         // Arrange
         var rootCommand = new RootCommand();
         const string expectedSubcommandName = "append-file";
+        var serviceProviderMockObject = Mock.Of<IServiceProvider>();
         
         // Act
-        rootCommand.AddAppendFileSubcommand();
+        rootCommand.AddAppendFileSubcommand(serviceProviderMockObject);
         var subcommand = rootCommand
             .Subcommands.FirstOrDefault(o => o.Name == expectedSubcommandName);
         
@@ -39,14 +41,15 @@ public class RankingsRootCommandExtensionsTests
     ///     the result option to a root command.
     /// </summary>
     [Fact]
-    public void AddAppendResultSubcommand_AddsOptionToRootCommand()
+    public void AddAppendResultSubcommand_AddsSubcommandToRootCommand()
     {
         // Arrange
         var rootCommand = new RootCommand();
         const string expectedSubcommandName = "append-result";
+        var serviceProviderMockObject = Mock.Of<IServiceProvider>();
         
         // Act
-        rootCommand.AddAppendResultSubcommand();
+        rootCommand.AddAppendResultSubcommand(serviceProviderMockObject);
         var subcommand = rootCommand
             .Subcommands.FirstOrDefault(o => o.Name == expectedSubcommandName);
         
