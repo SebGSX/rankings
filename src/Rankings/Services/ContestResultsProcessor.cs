@@ -1,7 +1,6 @@
 ﻿// Copyright © 2025 Seb Garrioch. All rights reserved.
 // Published under the MIT License.
 
-using System.Collections;
 using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
@@ -69,9 +68,9 @@ public class ContestResultsProcessor : IContestResultsProcessor
         var rankings = CalculateRankings(allResults);
 
         // Sort the rankings by points (descending) and then by name (ascending).
-        var sortedRankings = rankings.Cast<DictionaryEntry>()
-            .OrderByDescending(entry => (ushort)entry.Value!)
-            .ThenBy(entry => (string)entry.Key)
+        var sortedRankings = rankings
+            .OrderByDescending(entry => entry.Value)
+            .ThenBy(entry => entry.Key)
             .ToList();
 
         // Display the rankings.
@@ -79,10 +78,8 @@ public class ContestResultsProcessor : IContestResultsProcessor
         var rank = 0;
         var rankOffset = 0;
         var previousPoints = -1;
-        foreach (var entry in sortedRankings)
+        foreach (var (contestantName, points) in sortedRankings)
         {
-            var contestantName = (string)entry.Key;
-            var points = (ushort)entry.Value!;
             var pointLabel = points == 1
                 ? Common.ContestResultsProcessor_RankingDisplay_PointSingular
                 : Common.ContestResultsProcessor_RankingDisplay_PointPlural;
@@ -99,7 +96,11 @@ public class ContestResultsProcessor : IContestResultsProcessor
 
             previousPoints = points;
 
-            Console.WriteLine(Common.ContestResultsProcessor_DisplayRankingTable_Row, rank, contestantName, points,
+            Console.WriteLine(
+                Common.ContestResultsProcessor_DisplayRankingTable_Row,
+                rank,
+                contestantName,
+                points,
                 pointLabel);
         }
     }
@@ -149,13 +150,13 @@ public class ContestResultsProcessor : IContestResultsProcessor
     /// <returns>
     ///     A hashtable where the keys are contestant names and the values are their total points.
     /// </returns>
-    private static Hashtable CalculateRankings(List<ContestResult> allResults)
+    private static Dictionary<string, ushort> CalculateRankings(List<ContestResult> allResults)
     {
         const ushort pointsForWin = 3;
         const ushort pointsForDraw = 1;
         const ushort pointsForLoss = 0;
 
-        var rankings = new Hashtable();
+        var rankings = new Dictionary<string, ushort>();
 
         foreach (var result in allResults)
         {
@@ -171,16 +172,12 @@ public class ContestResultsProcessor : IContestResultsProcessor
             if (result.Contestant1Score == result.Contestant2Score)
                 contestant2Points = pointsForDraw;
 
-            if (!rankings.ContainsKey(result.Contestant1Name))
-                rankings.Add(result.Contestant1Name, contestant1Points);
-            else
+            if (!rankings.TryAdd(result.Contestant1Name, contestant1Points))
                 rankings[result.Contestant1Name] =
-                    (ushort)((ushort)rankings[result.Contestant1Name]! + contestant1Points);
-            if (!rankings.ContainsKey(result.Contestant2Name))
-                rankings.Add(result.Contestant2Name, contestant2Points);
-            else
+                    (ushort)(rankings[result.Contestant1Name] + contestant1Points);
+            if (!rankings.TryAdd(result.Contestant2Name, contestant2Points))
                 rankings[result.Contestant2Name] =
-                    (ushort)((ushort)rankings[result.Contestant2Name]! + contestant2Points);
+                    (ushort)(rankings[result.Contestant2Name] + contestant2Points);
         }
 
         return rankings;
