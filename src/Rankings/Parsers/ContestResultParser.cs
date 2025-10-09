@@ -215,13 +215,13 @@ public class ContestResultParser
     ///     Indicates whether the input is valid.
     /// </summary>
     public bool IsValid => !(HasMultipleContestantResultSeparators
-                           || IsMissingContestantResultSeparator
-                           || HasNoContestant1Result
-                           || HasNoContestant2Result
-                           || HasNoContestant1Name
-                           || HasNoContestant1Score
-                           || HasNoContestant2Name
-                           || HasNoContestant2Score);
+                             || IsMissingContestantResultSeparator
+                             || HasNoContestant1Result
+                             || HasNoContestant2Result
+                             || HasNoContestant1Name
+                             || HasNoContestant1Score
+                             || HasNoContestant2Name
+                             || HasNoContestant2Score);
 
     /// <summary>
     ///     Gets the parsed <see cref="ContestResult" /> if the input is valid.

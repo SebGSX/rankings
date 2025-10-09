@@ -163,13 +163,13 @@ public class ContestResultsProcessor : IContestResultsProcessor
                 ? pointsForWin
                 : pointsForLoss;
             if (result.Contestant1Score == result.Contestant2Score)
-                contestant1Points += pointsForDraw;
+                contestant1Points = pointsForDraw;
 
             var contestant2Points = result.Contestant2Score > result.Contestant1Score
                 ? pointsForWin
                 : pointsForLoss;
             if (result.Contestant1Score == result.Contestant2Score)
-                contestant2Points += pointsForDraw;
+                contestant2Points = pointsForDraw;
 
             if (!rankings.ContainsKey(result.Contestant1Name))
                 rankings.Add(result.Contestant1Name, contestant1Points);
