@@ -54,7 +54,7 @@ public class FileStore : FileReadOnlyStore, IStore
     public void Reset()
     {
         // Any exception thrown bubbles up to be handled by the caller.
-        if (FileInfo.Exists) return;
+        if (!FileInfo.Exists) return;
         
         FileInfo.Delete();
     }
