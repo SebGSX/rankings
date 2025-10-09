@@ -32,7 +32,17 @@ public class ContestResultsProcessor : IContestResultsProcessor
         _options = options;
         _storageFactory = storageFactory;
     }
-    
+
+    /// <inheritdoc />
+    public void ClearContestResults()
+    {
+        var store = _storageFactory.CreateFileStore(_options.Value.FilePath);
+        
+        if (store.IsInitialized) store.Reset();
+        
+        Console.Write(Common.ContestResultsProcessor_Clear_Success);
+    }
+
     /// <inheritdoc />
     /// <exception cref="InvalidOperationException">Thrown if any of the results are invalid.</exception>
     public void Process(string[] contestResults)

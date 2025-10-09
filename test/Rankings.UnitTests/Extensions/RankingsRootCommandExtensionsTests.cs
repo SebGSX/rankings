@@ -132,4 +132,53 @@ public class RankingsRootCommandExtensionsTests
         resultsProcessorMock
             .Verify(m => m.Process(It.IsAny<string[]>()), Times.Once);
     }
+    
+    /// <summary>
+    ///     Tests that <see cref="RankingsRootCommandExtensions.AddClearContestResultsSubcommand" /> correctly adds
+    ///     the result option to a root command.
+    /// </summary>
+    [Fact]
+    public void AddClearContestResultsSubcommand_AddsSubcommandToRootCommand()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        const string expectedSubcommandName = "clear-contest-results";
+        var serviceProviderMockObject = Mock.Of<IServiceProvider>();
+        
+        // Act
+        rootCommand.AddClearContestResultsSubcommand(serviceProviderMockObject);
+        var subcommand = rootCommand
+            .Subcommands.FirstOrDefault(o => o.Name == expectedSubcommandName);
+        
+        // Assert
+        Assert.NotNull(subcommand);
+        Assert.Equal(expectedSubcommandName, subcommand.Name);
+        Assert.NotNull(subcommand.Description);
+        Assert.NotEmpty(subcommand.Description);
+    }
+
+    [Fact]
+    public void AddClearContestResultsSubcommand_Handler_HandlesInvocation()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        
+        var resultsProcessorMock = new Mock<IContestResultsProcessor>();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+
+        rootCommand.AddClearContestResultsSubcommand(serviceProviderMock.Object);
+        
+        serviceProviderMock.Setup(m => m.GetService(typeof(IContestResultsProcessor)))
+            .Returns(resultsProcessorMock.Object);
+        
+        // Act
+        var parseResult = rootCommand.Parse("clear-contest-results");
+        parseResult.Invoke();
+        
+        // Assert
+        serviceProviderMock.Verify(m => m.GetService(typeof(IContestResultsProcessor)), Times.Once);
+        resultsProcessorMock
+            .Verify(m => m.ClearContestResults(), Times.Once);
+    }
 }

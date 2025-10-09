@@ -84,4 +84,10 @@
     <data name="ContestResultsProcessor_Processing_Success" xml:space="preserve">
         <value>Success: Added {0} contest result(s) to the contest results store. Rerun the command without any arguments to see the rankings latest table.</value>
     </data>
+    <data name="ClearContestResults_Subcommand_Description" xml:space="preserve">
+        <value>Clears contest results from the contest results store.</value>
+    </data>
+    <data name="ContestResultsProcessor_Clear_Success" xml:space="preserve">
+        <value>Success: The contest results store has been cleared.</value>
+    </data>
 </root>

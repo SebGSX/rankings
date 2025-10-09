@@ -145,4 +145,47 @@ public static class RankingsRootCommandExtensions
         
         return rootCommand;
     }
+    
+    /// <summary>
+    ///     Adds the clear contest results subcommand to the root command.
+    /// </summary>
+    /// <param name="rootCommand">The root command receiving the subcommand.</param>
+    /// <param name="serviceProvider">The service provider used to support dependency injection.</param>
+    /// <returns>The root command with the configured subcommand added.</returns>
+    public static RootCommand AddClearContestResultsSubcommand(this RootCommand rootCommand, IServiceProvider serviceProvider)
+    {
+        var clearContestResultsCommand = new Command(
+            CommandLineSubcommands.ClearContestResults,
+            Common.ClearContestResults_Subcommand_Description);
+        
+        /*
+         * The handler for a command is dependent on its options and arguments. As such, the cleanest way to define
+         * the handler is where the options and arguments are defined to avoid brittle abstractions.
+         */
+        clearContestResultsCommand.SetAction(_ =>
+        {
+            try
+            {
+                // Resolve dependencies.
+                var processor = serviceProvider.GetService<IContestResultsProcessor>()
+                                ?? throw new InvalidOperationException(Common.ContestResultsProcessor_NotRegistered);
+                
+                // Clear all contest results that were previously processed and stored.
+                processor.ClearContestResults();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                Environment.ExitCode = 1;
+                return Environment.ExitCode;
+            }
+
+            Environment.ExitCode = 0;
+            return Environment.ExitCode;
+        });
+        
+        rootCommand.Add(clearContestResultsCommand);
+        
+        return rootCommand;
+    }
 }

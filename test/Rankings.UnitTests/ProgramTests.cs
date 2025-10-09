@@ -39,7 +39,8 @@ public class ProgramTests
         var expectedSubcommands = new[]
         {
             "append-file",
-            "append-result"
+            "append-result",
+            "clear-contest-results"
         };
 
         // Act

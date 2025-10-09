@@ -48,4 +48,14 @@ public class FileStore : FileReadOnlyStore, IStore
             // Just create, then dispose of the file handle.
         }
     }
+    
+    /// <inheritdoc />
+    [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
+    public void Reset()
+    {
+        // Any exception thrown bubbles up to be handled by the caller.
+        if (FileInfo.Exists) return;
+        
+        FileInfo.Delete();
+    }
 }

@@ -40,6 +40,7 @@ public abstract class Program
         _rootCommand = new RootCommand(Common.RootCommand_Description);
         _rootCommand.AddAppendFileSubcommand(serviceProvider);
         _rootCommand.AddAppendResultSubcommand(serviceProvider);
+        _rootCommand.AddClearContestResultsSubcommand(serviceProvider);
         _rootCommand.SetAction(_ => 0);
         
         // Automatically handles unhandled exceptions thrown during parsing or invocation.

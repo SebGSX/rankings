@@ -30,6 +30,30 @@ public class ContestResultsProcessorTests
         // Assert
         Assert.Null(exception);
     }
+
+    [Fact]
+    public void ClearContestResults_ResetsStore()
+    {
+        // Arrange
+        var options = Options.Create(new ContestResultsProcessorOptions { FilePath = "test.json" });
+        var storageFactoryMock = new Mock<IStorageFactory>();
+        var fileStoreMock = new Mock<IStore>();
+        var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
+        
+        storageFactoryMock
+            .Setup(m => m.CreateFileStore(It.IsAny<string>()))
+            .Returns(fileStoreMock.Object);
+        fileStoreMock.Setup(m => m.IsInitialized).Returns(true);
+        
+        // Act
+        var exception = Record.Exception(() => processor.ClearContestResults());
+        
+        // Assert
+        Assert.Null(exception);
+        storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
+        fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
+        fileStoreMock.Verify(m => m.Reset(), Times.Once);
+    }
     
     /// <summary>
     ///     Tests that <see cref="ContestResultsProcessor.Process"/> throws an <see cref="InvalidOperationException"/>
@@ -82,6 +106,10 @@ public class ContestResultsProcessorTests
         storageFactoryMock.Verify(m => m.CreateFileStore(It.IsAny<string>()), Times.Never);
     }
 
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.Process"/> stores results when provided with valid contest
+    ///     results.
+    /// </summary>
     [Fact]
     public void Process_WithValidContestResults_StoresResults()
     {
@@ -96,8 +124,6 @@ public class ContestResultsProcessorTests
             .Returns(fileStoreMock.Object);
         
         fileStoreMock.Setup(m => m.IsInitialized).Returns(false);
-        fileStoreMock.Setup(m => m.Initialize());
-        fileStoreMock.Setup(m => m.AppendAllLines(It.IsAny<string[]>()));
         
         var contestResults = new[]
         {
