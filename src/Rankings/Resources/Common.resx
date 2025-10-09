@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
                 xmlns="">
         <xsd:element name="root" msdata:IsDataSet="true">
 
@@ -94,5 +95,20 @@
     </data>
     <data name="ContestResultsProcessor_Clear_Success" xml:space="preserve">
         <value>Success: The contest results store has been cleared.</value>
+    </data>
+    <data name="ContestResultsProcessor_Display_NoData" xml:space="preserve">
+        <value>Cannot display the ranking table because no results exist in the contest results store. Please add results, then retry.</value>
+    </data>
+    <data name="ContestResultsProcessor_RankingDisplay_Header" xml:space="preserve">
+        <value>The current ranking is:</value>
+    </data>
+    <data name="ContestResultsProcessor_RankingDisplay_PointSingular" xml:space="preserve">
+        <value>pt</value>
+    </data>
+    <data name="ContestResultsProcessor_RankingDisplay_PointPlural" xml:space="preserve">
+        <value>pts</value>
+    </data>
+    <data name="ContestResultsProcessor_DisplayRankingTable_Row" xml:space="preserve">
+        <value>{0}. {1}, {2} {3}</value>
     </data>
 </root>

@@ -185,4 +185,33 @@ public class RankingsRootCommandExtensionsTests
         resultsProcessorMock
             .Verify(m => m.ClearContestResults(), Times.Once);
     }
+
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.SetRootCommandAction" />
+    ///     handles invocation correctly.
+    /// </summary>
+    [Fact]
+    public void SetRootCommandAction_Handler_HandlesInvocation()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+
+        var resultsProcessorMock = new Mock<IContestResultsProcessor>();
+
+        var serviceProviderMock = new Mock<IServiceProvider>();
+
+        rootCommand.SetRootCommandAction(serviceProviderMock.Object);
+
+        serviceProviderMock.Setup(m => m.GetService(typeof(IContestResultsProcessor)))
+            .Returns(resultsProcessorMock.Object);
+
+        // Act
+        var parseResult = rootCommand.Parse(string.Empty);
+        parseResult.Invoke();
+
+        // Assert
+        serviceProviderMock.Verify(m => m.GetService(typeof(IContestResultsProcessor)), Times.Once);
+        resultsProcessorMock
+            .Verify(m => m.DisplayRankingTable(), Times.Once);
+    }
 }

@@ -39,6 +39,26 @@ public class FileReadOnlyStore : IReadOnlyStore
     ///     Exceptions are swallowed and <c>false</c> is returned if any are thrown,
     /// </remarks>
     [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
+    public bool IsEmpty
+    {
+        get
+        {
+            try
+            {
+                return FileInfo is { Exists: true, Length: 0 };
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
+    }
+
+    /// <inheritdoc />
+    /// <remarks>
+    ///     Exceptions are swallowed and <c>false</c> is returned if any are thrown,
+    /// </remarks>
+    [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
     public bool IsInitialized
     {
         get

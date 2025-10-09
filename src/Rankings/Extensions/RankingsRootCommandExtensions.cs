@@ -187,4 +187,41 @@ public static class RankingsRootCommandExtensions
 
         return rootCommand;
     }
+
+    /// <summary>
+    ///     Sets the action for the root command.
+    /// </summary>
+    /// <param name="rootCommand">The root command being set.</param>
+    /// <param name="serviceProvider">The service provider used to support dependency injection.</param>
+    /// <returns>The root command with the configured action.</returns>
+    public static RootCommand SetRootCommandAction(this RootCommand rootCommand, IServiceProvider serviceProvider)
+    {
+        /*
+         * The handler for a command is dependent on its options and arguments. As such, the cleanest way to define
+         * the handler is where the options and arguments are defined to avoid brittle abstractions.
+         */
+        rootCommand.SetAction(_ =>
+        {
+            try
+            {
+                // Resolve dependencies.
+                var processor = serviceProvider.GetService<IContestResultsProcessor>()
+                                ?? throw new InvalidOperationException(Common.ContestResultsProcessor_NotRegistered);
+
+                // Display the ranking table.
+                processor.DisplayRankingTable();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                Environment.ExitCode = 1;
+                return Environment.ExitCode;
+            }
+
+            Environment.ExitCode = 0;
+            return Environment.ExitCode;
+        });
+
+        return rootCommand;
+    }
 }

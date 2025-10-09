@@ -14,6 +14,11 @@ public interface IContestResultsProcessor
     public void ClearContestResults();
 
     /// <summary>
+    ///     Displays the current ranking table based on the processed and stored contest results.
+    /// </summary>
+    public void DisplayRankingTable();
+
+    /// <summary>
     ///     Processes the provided contest results.
     /// </summary>
     /// <param name="contestResults">The contest results to process.</param>
