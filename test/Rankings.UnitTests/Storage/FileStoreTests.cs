@@ -47,18 +47,18 @@ public class FileStoreTests
     }
     
     /// <summary>
-    ///     Tests that the constructor does not throw when the input is a valid file name.
+    ///     Tests that the constructor instantiates the object when the input is a valid file name.
     /// </summary>
     [Fact]
-    public void Ctor_WithValidFullName_DoesNotThrow()
+    public void Ctor_WithValidFullName_Instantiates()
     {
         // Arrange
         const string fullName = "validFileName.txt";
         
         // Act
-        var exception = Record.Exception(() => new FileStore(fullName));
+        var actual = new FileStore(fullName);
         
         // Assert
-        Assert.Null(exception);
+        Assert.NotNull(actual);
     }
 }

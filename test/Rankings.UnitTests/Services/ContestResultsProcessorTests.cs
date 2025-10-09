@@ -15,20 +15,20 @@ namespace Rankings.UnitTests.Services;
 public class ContestResultsProcessorTests
 {
     /// <summary>
-    ///     Tests that the constructor does not throw when provided with valid parameters.
+    ///     Tests that the constructor instantiates the object when provided with valid parameters.
     /// </summary>
     [Fact]
-    public void Ctor_WithValidParameters_DoesNotThrow()
+    public void Ctor_WithValidParameters_Instantiates()
     {
         // Arrange
         var options = Options.Create(new ContestResultsProcessorOptions { FilePath = "test.json" });
         var storageFactoryMock = new Mock<IStorageFactory>();
 
         // Act
-        var exception = Record.Exception(() => new ContestResultsProcessor(options, storageFactoryMock.Object));
+        var actual = new ContestResultsProcessor(options, storageFactoryMock.Object);
         
         // Assert
-        Assert.Null(exception);
+        Assert.NotNull(actual);
     }
 
     [Fact]
@@ -46,10 +46,9 @@ public class ContestResultsProcessorTests
         fileStoreMock.Setup(m => m.IsInitialized).Returns(true);
         
         // Act
-        var exception = Record.Exception(() => processor.ClearContestResults());
+        processor.ClearContestResults();
         
         // Assert
-        Assert.Null(exception);
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Reset(), Times.Once);
@@ -93,6 +92,7 @@ public class ContestResultsProcessorTests
         var storageFactoryMock = new Mock<IStorageFactory>();
         var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
         using var sw = new StringWriter();
+        var originalError = Console.Error;
         Console.SetError(sw);
         
         // Act
@@ -104,6 +104,9 @@ public class ContestResultsProcessorTests
         Assert.Contains("Error in contestant result 1: ", sw.ToString());
         Assert.Equal(expected, exception.Message);
         storageFactoryMock.Verify(m => m.CreateFileStore(It.IsAny<string>()), Times.Never);
+        
+        // Cleanup
+        Console.SetError(originalError);
     }
 
     /// <summary>
@@ -132,10 +135,9 @@ public class ContestResultsProcessorTests
         };
         
         // Act
-        var exception = Record.Exception(() => processor.Process(contestResults));
+        processor.Process(contestResults);
         
         // Assert
-        Assert.Null(exception);
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Initialize(), Times.Once);
