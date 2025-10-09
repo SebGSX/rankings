@@ -9,6 +9,14 @@ namespace Rankings.Storage;
 public interface IReadOnlyStore
 {
     /// <summary>
+    ///     Indicates whether the store is empty.
+    /// </summary>
+    /// <returns>
+    ///     <c>True</c> if the store is empty; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsEmpty { get; }
+
+    /// <summary>
     ///     Indicates whether the store has been initialized.
     /// </summary>
     /// <returns>

@@ -51,7 +51,7 @@ public abstract class Program
         _rootCommand.AddAppendFileSubcommand(serviceProvider);
         _rootCommand.AddAppendResultSubcommand(serviceProvider);
         _rootCommand.AddClearContestResultsSubcommand(serviceProvider);
-        _rootCommand.SetAction(_ => 0);
+        _rootCommand.SetRootCommandAction(serviceProvider);
 
         // Automatically handles unhandled exceptions thrown during parsing or invocation.
         _rootCommand.Parse(args).Invoke();

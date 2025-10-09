@@ -31,6 +31,10 @@ public class ContestResultsProcessorTests
         Assert.NotNull(actual);
     }
 
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.ClearContestResults" /> resets the store when it is
+    ///     initialized.
+    /// </summary>
     [Fact]
     public void ClearContestResults_ResetsStore()
     {
@@ -52,6 +56,100 @@ public class ContestResultsProcessorTests
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Reset(), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.DisplayRankingTable" /> prints the ranking table when
+    ///     there are results in the store.
+    /// </summary>
+    [Fact]
+    public void DisplayRankingTable_WithData_PrintsRankingTable()
+    {
+        // Arrange
+        var options = Options.Create(new ContestResultsProcessorOptions { FilePath = "test.json" });
+        var storageFactoryMock = new Mock<IStorageFactory>();
+        var fileReadOnlyStoreMock = new Mock<IReadOnlyStore>();
+        var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
+
+        storageFactoryMock
+            .Setup(m => m.CreateFileReadOnlyStore(It.IsAny<string>()))
+            .Returns(fileReadOnlyStoreMock.Object);
+        fileReadOnlyStoreMock.Setup(m => m.IsInitialized).Returns(true);
+        fileReadOnlyStoreMock.Setup(m => m.IsEmpty).Returns(false);
+        fileReadOnlyStoreMock.Setup(m => m.ReadAllLines()).Returns([
+            "{\"Contestant1Name\":\"alice FC\",\"Contestant1Score\":10,\"Contestant2Name\":\"FC Bob\",\"Contestant2Score\":20}",
+            "{\"Contestant1Name\":\"FC Bob\",\"Contestant1Score\":5,\"Contestant2Name\":\"Fred FC\",\"Contestant2Score\":3}",
+            "{\"Contestant1Name\":\"alice FC\",\"Contestant1Score\":2,\"Contestant2Name\":\"Fred FC\",\"Contestant2Score\":2}",
+            "{\"Contestant1Name\":\"alice FC\",\"Contestant1Score\":3,\"Contestant2Name\":\"Fred FC\",\"Contestant2Score\":3}",
+            "{\"Contestant1Name\":\"alice FC\",\"Contestant1Score\":4,\"Contestant2Name\":\"Fred FC\",\"Contestant2Score\":4}",
+            "{\"Contestant1Name\":\"alice FC\",\"Contestant1Score\":5,\"Contestant2Name\":\"Fred FC\",\"Contestant2Score\":5}",
+            "{\"Contestant1Name\":\"FC Dana\",\"Contestant1Score\":7,\"Contestant2Name\":\"FC Bob\",\"Contestant2Score\":5}",
+            "{\"Contestant1Name\":\"FC mike\",\"Contestant1Score\":1,\"Contestant2Name\":\"FC Ike\",\"Contestant2Score\":1}",
+            "{\"Contestant1Name\":\"FC Bob\",\"Contestant1Score\":3,\"Contestant2Name\":\"Rob FC\",\"Contestant2Score\":0}"
+        ]);
+
+        using var sw = new StringWriter();
+        var originalOut = Console.Out;
+        Console.SetOut(sw);
+
+        // Act
+        processor.DisplayRankingTable();
+
+        // Assert
+        var output = sw.ToString();
+        Assert.Contains("The current ranking is:", output);
+        Assert.Contains("1. FC Bob, 9 pts", output);
+        Assert.Contains("2. alice FC, 4 pt", output);
+        Assert.Contains("2. Fred FC, 4 pt", output);
+        Assert.Contains("4. FC Dana, 3 pts", output);
+        Assert.Contains("5. FC Ike, 1 pt", output);
+        Assert.Contains("5. FC mike, 1 pt", output);
+        Assert.Contains("7. Rob FC, 0 pts", output);
+
+        storageFactoryMock.Verify(m => m.CreateFileReadOnlyStore(options.Value.FilePath), Times.Once);
+        fileReadOnlyStoreMock.Verify(m => m.IsInitialized, Times.Once);
+        fileReadOnlyStoreMock.Verify(m => m.IsEmpty, Times.Once);
+        fileReadOnlyStoreMock.Verify(m => m.ReadAllLines(), Times.Once);
+
+        // Cleanup
+        Console.SetOut(originalOut);
+    }
+
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.DisplayRankingTable" /> prints a no data message when
+    ///     there are no results in the store.
+    /// </summary>
+    [Fact]
+    public void DisplayRankingTable_WithNoData_PrintsNoDataMessage()
+    {
+        // Arrange
+        const string expectedMessage =
+            "Cannot display the ranking table because no results exist in the contest results store. Please add results, then retry.";
+        var options = Options.Create(new ContestResultsProcessorOptions { FilePath = "test.json" });
+        var storageFactoryMock = new Mock<IStorageFactory>();
+        var fileReadOnlyStoreMock = new Mock<IReadOnlyStore>();
+        var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
+
+        storageFactoryMock
+            .Setup(m => m.CreateFileReadOnlyStore(It.IsAny<string>()))
+            .Returns(fileReadOnlyStoreMock.Object);
+        fileReadOnlyStoreMock.Setup(m => m.IsInitialized).Returns(false);
+
+        using var sw = new StringWriter();
+        var originalOut = Console.Out;
+        Console.SetOut(sw);
+
+        // Act
+        processor.DisplayRankingTable();
+
+        // Assert
+        Assert.Contains(expectedMessage, sw.ToString());
+
+        storageFactoryMock.Verify(m => m.CreateFileReadOnlyStore(options.Value.FilePath), Times.Once);
+        fileReadOnlyStoreMock.Verify(m => m.IsInitialized, Times.Once);
+
+        // Cleanup
+        Console.SetOut(originalOut);
     }
 
     /// <summary>

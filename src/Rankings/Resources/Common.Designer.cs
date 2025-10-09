@@ -177,6 +177,24 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot display the ranking table because no results exist in the contest results store. Please add results, then retry..
+        /// </summary>
+        internal static string ContestResultsProcessor_Display_NoData {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_Display_NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}. {1}, {2} {3}.
+        /// </summary>
+        internal static string ContestResultsProcessor_DisplayRankingTable_Row {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_DisplayRankingTable_Row", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatal error: The contest results processor is not registered..
         /// </summary>
         internal static string ContestResultsProcessor_NotRegistered {
@@ -191,6 +209,33 @@ namespace Rankings.Resources {
         internal static string ContestResultsProcessor_Processing_Success {
             get {
                 return ResourceManager.GetString("ContestResultsProcessor_Processing_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current ranking is:.
+        /// </summary>
+        internal static string ContestResultsProcessor_RankingDisplay_Header {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_RankingDisplay_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pts.
+        /// </summary>
+        internal static string ContestResultsProcessor_RankingDisplay_PointPlural {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_RankingDisplay_PointPlural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pt.
+        /// </summary>
+        internal static string ContestResultsProcessor_RankingDisplay_PointSingular {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_RankingDisplay_PointSingular", resourceCulture);
             }
         }
         
