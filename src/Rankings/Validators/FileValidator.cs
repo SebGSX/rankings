@@ -21,14 +21,14 @@ public abstract class FileValidator
         return result =>
         {
             const int notFound = -1;
-            
+
             // The result should never be null.
             Debug.Assert(result != null);
             Debug.Assert(result.GetValueOrDefault<string>() != null);
-            
+
             var filePath = result.GetValueOrDefault<string>();
             var hasFilePath = !string.IsNullOrWhiteSpace(filePath);
-            
+
             // Identify validation errors in the order they should be reported.
             var errors = new List<(bool IsError, string ErrorMessage)>
             {
@@ -48,7 +48,7 @@ public abstract class FileValidator
                     (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
                         Common.FileOption_Validation_InvalidFileName),
                     (fileInfo.DirectoryName!.IndexOfAny(Path.GetInvalidPathChars()) != notFound,
-                        Common.FileOption_Validation_InvalidDirectoryName),
+                        Common.FileOption_Validation_InvalidDirectoryName)
                 });
             }
 
@@ -56,11 +56,8 @@ public abstract class FileValidator
                 .Where(e => e.IsError)
                 .Select(e => e.ErrorMessage)
                 .FirstOrDefault();
-            
-            if (!string.IsNullOrEmpty(error))
-            {
-                result.AddError(error);
-            }
+
+            if (!string.IsNullOrEmpty(error)) result.AddError(error);
         };
     }
 }

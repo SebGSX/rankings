@@ -30,10 +30,7 @@ public abstract class ResultValidator
                 var contestResultParser = new ContestResultParser(result.GetValueOrDefault<string>());
                 var error = contestResultParser.GetNextError();
 
-                if (!string.IsNullOrEmpty(error))
-                {
-                    result.AddError(error);
-                }
+                if (!string.IsNullOrEmpty(error)) result.AddError(error);
             }
             catch (ArgumentException)
             {

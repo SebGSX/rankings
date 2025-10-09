@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Rankings.Services;
 
 /// <summary>
-///     Represents options for configuring the <see cref="ContestResultsProcessor"/>.
+///     Represents options for configuring the <see cref="ContestResultsProcessor" />.
 /// </summary>
 [ExcludeFromCodeCoverage(Justification = "POCOs are not tested.")]
 [DebuggerDisplay("{" + nameof(FilePath) + "}", Name = nameof(FilePath))]

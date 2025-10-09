@@ -15,17 +15,17 @@ public class ContestResult
     ///     Gets the first contestant's name, if any.
     /// </summary>
     public string Contestant1Name { get; set; } = string.Empty;
-    
+
     /// <summary>
     ///     Gets the first contestant's score, if any.
     /// </summary>
     public ushort Contestant1Score { get; set; }
-    
+
     /// <summary>
     ///     Gets the second contestant's name, if any.
     /// </summary>
     public string Contestant2Name { get; set; } = string.Empty;
-    
+
     /// <summary>
     ///     Gets the second contestant's score, if any.
     /// </summary>

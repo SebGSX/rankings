@@ -15,7 +15,7 @@ public interface IReadOnlyStore
     ///     <c>True</c> if the store has been initialized; otherwise, <c>false</c>.
     /// </returns>
     public bool IsInitialized { get; }
-    
+
     /// <summary>
     ///     Reads all lines of text from the store.
     /// </summary>

@@ -26,7 +26,7 @@ public class ContestResultParserTests
     {
         // Act
         var exception = Record.Exception(() => new ContestResultParser(input));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<ArgumentException>(exception);
@@ -153,7 +153,7 @@ public class ContestResultParserTests
 
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
 
@@ -193,14 +193,14 @@ public class ContestResultParserTests
     {
         // Act
         var exception = Record.Exception(() => new ContestResultParser(input));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<ArgumentException>(exception);
         Assert.Equal("input", ((ArgumentException)exception).ParamName);
         Assert.Equal("Value cannot contain a new line. (Parameter 'input')", exception.Message);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor throws an <see cref="ArgumentNullException" /> when the input is <c>null</c>.
     /// </summary>
@@ -209,16 +209,16 @@ public class ContestResultParserTests
     {
         // Arrange
         string input = null!;
-        
+
         // Act
         var exception = Record.Exception(() => new ContestResultParser(input));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<ArgumentNullException>(exception);
         Assert.Equal("input", ((ArgumentNullException)exception).ParamName);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor sets <see cref="ContestResultParser.IsMissingContestantResultSeparator" />
     ///     to <c>true</c> when the input is missing the contestant result separator, regardless of spacing.
@@ -232,27 +232,27 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.True(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.True(parser.HasNoContestant1Name);
         Assert.True(parser.HasNoContestant1Result);
         Assert.True(parser.HasNoContestant1Score);
-        
+
         Assert.True(parser.HasNoContestant2Name);
         Assert.True(parser.HasNoContestant2Result);
         Assert.True(parser.HasNoContestant2Score);
-        
+
         Assert.Empty(parser.Contestant1Name);
         Assert.Equal(0, parser.Contestant1Score);
-        
+
         Assert.Empty(parser.Contestant2Name);
         Assert.Equal(0, parser.Contestant2Score);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasMultipleContestantResultSeparators" />
     ///     to <c>true</c> when the input contains multiple contestant result separators, regardless of spacing.
@@ -276,24 +276,24 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.True(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.True(parser.HasNoContestant1Name);
         Assert.True(parser.HasNoContestant1Result);
         Assert.True(parser.HasNoContestant1Score);
-        
+
         Assert.True(parser.HasNoContestant2Name);
         Assert.True(parser.HasNoContestant2Result);
         Assert.True(parser.HasNoContestant2Score);
-        
+
         Assert.Empty(parser.Contestant1Name);
         Assert.Equal(0, parser.Contestant1Score);
-        
+
         Assert.Empty(parser.Contestant2Name);
         Assert.Equal(0, parser.Contestant2Score);
     }
@@ -353,24 +353,24 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.True(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.False(parser.HasNoContestant1Score);
-        
+
         Assert.False(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.False(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
@@ -414,28 +414,28 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.True(parser.HasNoContestant1Name);
         Assert.True(parser.HasNoContestant1Result);
         Assert.True(parser.HasNoContestant1Score);
-        
+
         Assert.False(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.False(parser.HasNoContestant2Score);
-        
+
         Assert.Empty(parser.Contestant1Name);
         Assert.Equal(0, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Score" />
     ///     to <c>true</c> when the input is missing the first contestant score, regardless of spacing.
@@ -491,24 +491,24 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.False(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.True(parser.HasNoContestant1Score);
-        
+
         Assert.False(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.False(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
@@ -568,24 +568,24 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.False(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.False(parser.HasNoContestant1Score);
-        
+
         Assert.True(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.False(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
@@ -631,25 +631,25 @@ public class ContestResultParserTests
 
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.False(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.False(parser.HasNoContestant1Score);
-        
+
         Assert.True(parser.HasNoContestant2Name);
         Assert.True(parser.HasNoContestant2Result);
         Assert.True(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Empty(parser.Contestant2Name);
         Assert.Equal(0, parser.Contestant2Score);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Score" />
     ///     to <c>true</c> when the input is missing the second contestant score, regardless of spacing.
@@ -705,28 +705,28 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.False(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.False(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.False(parser.HasNoContestant1Score);
-        
+
         Assert.False(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.True(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
-    
+
     /// <summary>
     ///     Tests that the constructor sets all properties correctly when the input is valid.
     /// </summary>
@@ -763,24 +763,24 @@ public class ContestResultParserTests
     {
         // Act
         var parser = new ContestResultParser(input);
-        
+
         // Assert
         Assert.True(parser.IsValid);
-        
+
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
-        
+
         Assert.False(parser.HasNoContestant1Name);
         Assert.False(parser.HasNoContestant1Result);
         Assert.False(parser.HasNoContestant1Score);
-        
+
         Assert.False(parser.HasNoContestant2Name);
         Assert.False(parser.HasNoContestant2Result);
         Assert.False(parser.HasNoContestant2Score);
-        
+
         Assert.Equal(expectedContestant1Name, parser.Contestant1Name);
         Assert.Equal(expectedContestant1Score, parser.Contestant1Score);
-        
+
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
     }
@@ -794,10 +794,10 @@ public class ContestResultParserTests
     {
         // Arrange
         var parser = new ContestResultParser("Alice 10 Bob 20");
-        
+
         // Act
         var exception = Record.Exception(() => parser.GetContestResult());
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<InvalidOperationException>(exception);
@@ -813,10 +813,10 @@ public class ContestResultParserTests
     {
         // Arrange
         var parser = new ContestResultParser($"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20");
-        
+
         // Act
         var actual = parser.GetContestResult();
-        
+
         // Assert
         Assert.NotNull(actual);
         Assert.Equal("Alice", actual.Contestant1Name);
@@ -824,7 +824,7 @@ public class ContestResultParserTests
         Assert.Equal("Bob", actual.Contestant2Name);
         Assert.Equal(20, actual.Contestant2Score);
     }
-    
+
     /// <summary>
     ///     Tests that <see cref="ContestResultParser.GetNextError" /> returns the correct error message for invalid input.
     /// </summary>
@@ -859,10 +859,10 @@ public class ContestResultParserTests
     {
         // Arrange
         var parser = new ContestResultParser(input);
-        
+
         // Act
         var actual = parser.GetNextError();
-        
+
         // Assert
         Assert.Equal(expected, actual);
     }
@@ -875,10 +875,10 @@ public class ContestResultParserTests
     {
         // Arrange
         var parser = new ContestResultParser($"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20");
-        
+
         // Act
         var actual = parser.GetNextError();
-        
+
         // Assert
         Assert.Null(actual);
     }

@@ -16,14 +16,14 @@ public class ContestResultsProcessor : IContestResultsProcessor
     ///     The options for the contest results processor.
     /// </summary>
     private readonly IOptions<ContestResultsProcessorOptions> _options;
-    
+
     /// <summary>
     ///     The storage factory used to create storage instances.
     /// </summary>
     private readonly IStorageFactory _storageFactory;
-    
+
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ContestResultsProcessor"/> class.
+    ///     Initializes a new instance of the <see cref="ContestResultsProcessor" /> class.
     /// </summary>
     /// <param name="options">The options for the contest results processor.</param>
     /// <param name="storageFactory">The storage factory.</param>
@@ -37,9 +37,9 @@ public class ContestResultsProcessor : IContestResultsProcessor
     public void ClearContestResults()
     {
         var store = _storageFactory.CreateFileStore(_options.Value.FilePath);
-        
+
         if (store.IsInitialized) store.Reset();
-        
+
         Console.Write(Common.ContestResultsProcessor_Clear_Success);
     }
 
@@ -57,9 +57,10 @@ public class ContestResultsProcessor : IContestResultsProcessor
                 error = parser;
                 break;
             }
+
             parsedResults.Add(parser);
         }
-        
+
         if (error != null)
         {
             Console.Error.Write(Common.ContestResultsProcessor_Validation_ParsingError, parsedResults.Count + 1);
@@ -67,7 +68,7 @@ public class ContestResultsProcessor : IContestResultsProcessor
         }
 
         var store = _storageFactory.CreateFileStore(_options.Value.FilePath);
-        
+
         if (!store.IsInitialized) store.Initialize();
 
         var jsonLines = parsedResults
@@ -76,7 +77,7 @@ public class ContestResultsProcessor : IContestResultsProcessor
             .ToArray();
 
         store.AppendAllLines(jsonLines);
-        
+
         Console.Write(Common.ContestResultsProcessor_Processing_Success, parsedResults.Count);
     }
 }

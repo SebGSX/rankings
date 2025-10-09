@@ -6,12 +6,12 @@ using Rankings.Parsers;
 namespace Rankings.UnitTests.Parsers;
 
 /// <summary>
-///     Unit tests for the <see cref="ContestResult"/> class.
+///     Unit tests for the <see cref="ContestResult" /> class.
 /// </summary>
 public class ContestResultTests
 {
     /// <summary>
-    ///     Tests that <see cref="ContestResult.ToString"/> returns the expected string representation.
+    ///     Tests that <see cref="ContestResult.ToString" /> returns the expected string representation.
     /// </summary>
     [Fact]
     public void ToString_ReturnsExpectedString()
@@ -23,7 +23,7 @@ public class ContestResultTests
             Contestant1Name = "Alice",
             Contestant1Score = 10,
             Contestant2Name = "Bob",
-            Contestant2Score = 8,
+            Contestant2Score = 8
         };
 
         // Act

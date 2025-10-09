@@ -12,7 +12,7 @@ public interface IContestResultsProcessor
     ///     Clears all previously processed and stored contest results.
     /// </summary>
     public void ClearContestResults();
-    
+
     /// <summary>
     ///     Processes the provided contest results.
     /// </summary>

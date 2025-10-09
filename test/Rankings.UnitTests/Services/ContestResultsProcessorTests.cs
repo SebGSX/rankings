@@ -10,7 +10,7 @@ using Rankings.Storage;
 namespace Rankings.UnitTests.Services;
 
 /// <summary>
-///     Unit tests for the <see cref="ContestResultsProcessor"/> class.
+///     Unit tests for the <see cref="ContestResultsProcessor" /> class.
 /// </summary>
 public class ContestResultsProcessorTests
 {
@@ -26,7 +26,7 @@ public class ContestResultsProcessorTests
 
         // Act
         var actual = new ContestResultsProcessor(options, storageFactoryMock.Object);
-        
+
         // Assert
         Assert.NotNull(actual);
     }
@@ -39,23 +39,23 @@ public class ContestResultsProcessorTests
         var storageFactoryMock = new Mock<IStorageFactory>();
         var fileStoreMock = new Mock<IStore>();
         var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
-        
+
         storageFactoryMock
             .Setup(m => m.CreateFileStore(It.IsAny<string>()))
             .Returns(fileStoreMock.Object);
         fileStoreMock.Setup(m => m.IsInitialized).Returns(true);
-        
+
         // Act
         processor.ClearContestResults();
-        
+
         // Assert
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Reset(), Times.Once);
     }
-    
+
     /// <summary>
-    ///     Tests that <see cref="ContestResultsProcessor.Process"/> throws an <see cref="InvalidOperationException"/>
+    ///     Tests that <see cref="ContestResultsProcessor.Process" /> throws an <see cref="InvalidOperationException" />
     ///     when provided with invalid contest results, and that the exception message matches the expected message
     /// </summary>
     /// <param name="input">The input string to validate.</param>
@@ -94,23 +94,23 @@ public class ContestResultsProcessorTests
         using var sw = new StringWriter();
         var originalError = Console.Error;
         Console.SetError(sw);
-        
+
         // Act
         var exception = Record.Exception(() => processor.Process([input]));
-        
+
         // Assert
         Assert.NotNull(exception);
         Assert.IsType<InvalidOperationException>(exception);
         Assert.Contains("Error in contestant result 1: ", sw.ToString());
         Assert.Equal(expected, exception.Message);
         storageFactoryMock.Verify(m => m.CreateFileStore(It.IsAny<string>()), Times.Never);
-        
+
         // Cleanup
         Console.SetError(originalError);
     }
 
     /// <summary>
-    ///     Tests that <see cref="ContestResultsProcessor.Process"/> stores results when provided with valid contest
+    ///     Tests that <see cref="ContestResultsProcessor.Process" /> stores results when provided with valid contest
     ///     results.
     /// </summary>
     [Fact]
@@ -125,18 +125,18 @@ public class ContestResultsProcessorTests
         storageFactoryMock
             .Setup(m => m.CreateFileStore(It.IsAny<string>()))
             .Returns(fileStoreMock.Object);
-        
+
         fileStoreMock.Setup(m => m.IsInitialized).Returns(false);
-        
+
         var contestResults = new[]
         {
             $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20",
             $"Charlie 15{ContestResultParser.ContestantResultSeparator} Dana 15"
         };
-        
+
         // Act
         processor.Process(contestResults);
-        
+
         // Assert
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
