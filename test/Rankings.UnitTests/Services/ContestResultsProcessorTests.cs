@@ -58,6 +58,10 @@ public class ContestResultsProcessorTests
         fileStoreMock.Verify(m => m.Reset(), Times.Once);
     }
 
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.DisplayRankingTable" /> prints the ranking table when
+    ///     there are results in the store.
+    /// </summary>
     [Fact]
     public void DisplayRankingTable_WithData_PrintsRankingTable()
     {
