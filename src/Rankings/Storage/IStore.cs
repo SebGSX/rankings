@@ -17,4 +17,9 @@ public interface IStore : IReadOnlyStore
     ///     Initializes the store, creating any backing resources if they do not already exist.
     /// </summary>
     public void Initialize();
+
+    /// <summary>
+    ///     Resets the store, clearing all data and returning it to an uninitialized state.
+    /// </summary>
+    public void Reset();
 }

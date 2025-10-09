@@ -9,6 +9,11 @@ namespace Rankings.Services;
 public interface IContestResultsProcessor
 {
     /// <summary>
+    ///     Clears all previously processed and stored contest results.
+    /// </summary>
+    public void ClearContestResults();
+    
+    /// <summary>
     ///     Processes the provided contest results.
     /// </summary>
     /// <param name="contestResults">The contest results to process.</param>

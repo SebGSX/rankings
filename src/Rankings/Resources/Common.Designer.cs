@@ -87,6 +87,15 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clears contest results from the contest results store..
+        /// </summary>
+        internal static string ClearContestResults_Subcommand_Description {
+            get {
+                return ResourceManager.GetString("ClearContestResults_Subcommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist..
         /// </summary>
         internal static string CommonAppendFile_Subcommand_FileNotAccessible {
@@ -155,6 +164,15 @@ namespace Rankings.Resources {
         internal static string ContestResultParser_Validation_NoContestantScore {
             get {
                 return ResourceManager.GetString("ContestResultParser_Validation_NoContestantScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success: The contest results store has been cleared..
+        /// </summary>
+        internal static string ContestResultsProcessor_Clear_Success {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_Clear_Success", resourceCulture);
             }
         }
         

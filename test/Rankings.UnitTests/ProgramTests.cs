@@ -39,7 +39,8 @@ public class ProgramTests
         var expectedSubcommands = new[]
         {
             "append-file",
-            "append-result"
+            "append-result",
+            "clear-contest-results"
         };
 
         // Act
@@ -63,6 +64,7 @@ public class ProgramTests
         // Arrange
         const string expected = "Show help and usage information";
         using var sw = new StringWriter();
+        var originalOut = Console.Out;
         Console.SetOut(sw);
 
         // Act
@@ -71,6 +73,9 @@ public class ProgramTests
 
         // Assert
         Assert.Contains(expected, actual);
+        
+        // Cleanup
+        Console.SetOut(originalOut);
     }
     
     /// <summary>
@@ -84,6 +89,7 @@ public class ProgramTests
         const string expected = "Unrecognized command or argument '--invalid'.";
         const string invalidArg = "--invalid";
         using var sw = new StringWriter();
+        var originalError = Console.Error;
         Console.SetError(sw);
 
         // Act
@@ -92,19 +98,31 @@ public class ProgramTests
 
         // Assert
         Assert.Contains(expected, actual);
+        
+        // Cleanup
+        Console.SetError(originalError);
     }
     
     /// <summary>
-    ///     Tests that <see cref="Program.Main"/> does not throw an exception when called with no arguments.
+    ///     Tests that <see cref="Program.Main"/> succeeds when called with no arguments.
     /// </summary>
     [Fact]
-    public void Main_WithNoArguments_DoesNotThrow()
+    public void Main_WithNoArguments_Succeeds()
     {
         // Arrange
         var args = Array.Empty<string>();
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
 
-        // Act & Assert
-        var exception = Record.Exception(() => Program.Main(args));
-        Assert.Null(exception);
+        // Act
+        Program.Main(args);
+        var actual = sw.ToString();
+        
+        // Assert
+        Assert.Empty(actual);
+        
+        // Cleanup
+        Console.SetError(originalError);
     }
 }
