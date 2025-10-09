@@ -26,6 +26,37 @@ their respective terminals.
 
 To run the app, please ensure that [.NET 9.0 SDK](https://dotnet.microsoft.com/download) is installed.
 
+### Usage
+
+The app is run from the command line using its executable `rankings`. To get help, use the `--help` or `-h` option.
+
+To add a contest result to the rankings, use the following command:
+
+```shell
+rankings append-result --result "Red 1, Blue 2"
+```
+
+To add multiple contest results from a file, use the following command:
+
+```shell
+rankings append-file --file "contest-results.txt"
+```
+
+> *Note:* The `contest-results.txt` file should contain one contest result per line in the format
+> `Contestant1Name Contestant1Score, Contestant2Name Contestant2Score`, e.g. `Red 1, Blue 2`.
+
+To view the current rankings, use the following command:
+
+```shell
+rankings
+```
+
+To clear the current rankings, use the following command:
+
+```shell
+rankings clear-contest-results
+```
+
 ### GitHub Project
 
 The project is hosted on GitHub within the [Rankings Project](https://github.com/users/SebGSX/projects/10).
