@@ -2,6 +2,7 @@
 // Published under the MIT License.
 
 using System.CommandLine;
+using System.Diagnostics;
 using Rankings.Parsers;
 using Rankings.Resources;
 using Rankings.Validators;
@@ -17,20 +18,28 @@ public static class RankingsRootCommandExtensions
     ///     Adds the append file subcommand to the root command.
     /// </summary>
     /// <param name="rootCommand">The root command receiving the subcommand.</param>
+    /// <param name="serviceProvider">The service provider used to support dependency injection.</param>
     /// <returns>The root command with the configured subcommand added.</returns>
-    public static RootCommand AddAppendFileSubcommand(this RootCommand rootCommand)
+    public static RootCommand AddAppendFileSubcommand(this RootCommand rootCommand, IServiceProvider serviceProvider)
     {
         var appendFileCommand = new Command(
             CommandLineSubcommands.AppendFile,
             Common.AppendFile_Subcommand_Description);
         
-        var fileOption = new Option<FileInfo>(
+        var fileOption = new Option<string>(
             name: CommandLineOptions.FileOption[0],
             aliases: CommandLineOptions.FileOption[1..])
         {
             Description = Common.FileOption_Description,
             Validators = { FileValidator.Validate() }
         };
+
+        appendFileCommand.SetAction(result =>
+        {
+            // The result should never be null.
+            Debug.Assert(result != null);
+            Debug.Assert(result.GetValue(fileOption) != null);
+        });
         
         appendFileCommand.Add(fileOption);
         rootCommand.Add(appendFileCommand);
@@ -42,8 +51,9 @@ public static class RankingsRootCommandExtensions
     ///     Adds the append result subcommand to the root command.
     /// </summary>
     /// <param name="rootCommand">The root command receiving the subcommand.</param>
+    /// <param name="serviceProvider">The service provider used to support dependency injection.</param>
     /// <returns>The root command with the configured subcommand added.</returns>
-    public static RootCommand AddAppendResultSubcommand(this RootCommand rootCommand)
+    public static RootCommand AddAppendResultSubcommand(this RootCommand rootCommand, IServiceProvider serviceProvider)
     {
         var appendResultCommand = new Command(
             CommandLineSubcommands.AppendResult,
@@ -56,6 +66,13 @@ public static class RankingsRootCommandExtensions
             Description = string.Format(Common.ResultOption_Description, ResultParser.ContestantResultSeparator),
             Validators = { ResultValidator.Validate() }
         };
+        
+        appendResultCommand.SetAction(result =>
+        {
+            // The result should never be null.
+            Debug.Assert(result != null);
+            Debug.Assert(result.GetValue(resultOption) != null);
+        });
         
         appendResultCommand.Add(resultOption);
         rootCommand.Add(appendResultCommand);

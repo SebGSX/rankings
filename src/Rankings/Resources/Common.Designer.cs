@@ -105,11 +105,29 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file specified does not exist..
+        ///   Looks up a localized string similar to The directory (folder) name contains invalid characters and is invalid..
         /// </summary>
-        internal static string FileOption_Validation_FileDoesNotExist {
+        internal static string FileOption_Validation_InvalidDirectoryName {
             get {
-                return ResourceManager.GetString("FileOption_Validation_FileDoesNotExist", resourceCulture);
+                return ResourceManager.GetString("FileOption_Validation_InvalidDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file name contains invalid characters and is invalid..
+        /// </summary>
+        internal static string FileOption_Validation_InvalidFileName {
+            get {
+                return ResourceManager.GetString("FileOption_Validation_InvalidFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file name is missing or empty and is invalid..
+        /// </summary>
+        internal static string FileOption_Validation_MissingFileName {
+            get {
+                return ResourceManager.GetString("FileOption_Validation_MissingFileName", resourceCulture);
             }
         }
         

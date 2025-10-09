@@ -20,23 +20,38 @@ public abstract class FileValidator
     {
         return result =>
         {
+            const int notFound = -1;
+            
             // The result should never be null.
             Debug.Assert(result != null);
-            Debug.Assert(result.GetValueOrDefault<FileInfo>() != null);
+            Debug.Assert(result.GetValueOrDefault<string>() != null);
             
-            var fileInfo = result.GetValueOrDefault<FileInfo>();
-            var fileExists = fileInfo.Exists;
+            var filePath = result.GetValueOrDefault<string>();
+            var hasFilePath = !string.IsNullOrWhiteSpace(filePath);
             
-            /*
-             * Identify validation errors in the order they should be reported.
-             * While only one validation is currently performed, this structure follows the established pattern and
-             * provides for extension in the future with minimal effort.
-             */
+            // Identify validation errors in the order they should be reported.
             var validations = new List<(bool IsError, string ErrorMessage)>
             {
-                (!fileExists, Common.FileOption_Validation_FileDoesNotExist)
+                (!hasFilePath, Common.FileOption_Validation_MissingFileName)
             };
-            
+
+            // Guard against missing or empty file path before checking for invalid characters.
+            if (hasFilePath)
+            {
+                var fileInfo = new FileInfo(filePath);
+                var hasFileName = !string.IsNullOrWhiteSpace(fileInfo.Name);
+
+                // Identify validation errors in the order they should be reported.
+                validations.AddRange(new List<(bool, string)>
+                {
+                    (!hasFileName, Common.FileOption_Validation_MissingFileName),
+                    (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
+                        Common.FileOption_Validation_InvalidFileName),
+                    (fileInfo.DirectoryName!.IndexOfAny(Path.GetInvalidPathChars()) != notFound,
+                        Common.FileOption_Validation_InvalidDirectoryName),
+                });
+            }
+
             foreach (var (isError, errorMessage) in validations)
             {
                 if (!isError) continue;

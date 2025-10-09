@@ -51,13 +51,19 @@
     <data name="FileOption_Description" xml:space="preserve">
         <value>Imports a set of contest results from the specified file into the results file. Each result must be in the form: "&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;". See help for the append-result command for further information.</value>
     </data>
-    <data name="FileOption_Validation_FileDoesNotExist" xml:space="preserve">
-        <value>The file specified does not exist.</value>
-    </data>
     <data name="AppendFile_Subcommand_Description" xml:space="preserve">
         <value>Appends a set of contest results from a file into the results file.</value>
     </data>
     <data name="AppendResult_Subcommand_Description" xml:space="preserve">
         <value>Appends a single contest result to the results file.</value>
+    </data>
+    <data name="FileOption_Validation_InvalidFileName" xml:space="preserve">
+        <value>The file name contains invalid characters and is invalid.</value>
+    </data>
+    <data name="FileOption_Validation_InvalidDirectoryName" xml:space="preserve">
+        <value>The directory (folder) name contains invalid characters and is invalid.</value>
+    </data>
+    <data name="FileOption_Validation_MissingFileName" xml:space="preserve">
+        <value>The file name is missing or empty and is invalid.</value>
     </data>
 </root>
