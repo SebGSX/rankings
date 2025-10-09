@@ -27,7 +27,7 @@ public class FileStore : FileReadOnlyStore, IStore
     ///     Exceptions are not caught and bubble up to be handled by the caller, which facilitates testing.
     /// </remarks>
     [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
-    public virtual void AppendAllLines(string[] lines)
+    public void AppendAllLines(string[] lines)
     {
         // Any exception thrown bubbles up to be handled by the caller.
         File.AppendAllLines(FileInfo.FullName, lines);

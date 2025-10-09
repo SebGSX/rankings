@@ -24,10 +24,10 @@
     <data name="ResultOption_Description" xml:space="preserve">
         <value>Adds a single contest result to the results file. A result must be in the form: "&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;". Replace &lt;CONTESTANT-n&gt; with the contestants' names such as, Team One, Team Two, etc. Names cannot start with - or --, and they cannot include the {0} symbol. Scores must be non-negative, whole numbers without any separator symbols, which means for example that 1000 is appropriate but 1,000 is not. Example: rankings -r "My Team 1{0} Other Team 0"</value>
     </data>
-    <data name="ResultOption_Validation_MissingContestantResultSeparator" xml:space="preserve">
+    <data name="ContestResultParser_Validation_MissingContestantResultSeparator" xml:space="preserve">
         <value>A result must be separated into two parts by the {0} symbol; one part for each contestant's name and score.</value>
     </data>
-    <data name="ResultOption_Validation_MultipleContestantResultSeparators" xml:space="preserve">
+    <data name="ContestResultParser_Validation_MultipleContestantResultSeparators" xml:space="preserve">
         <value>A result can only contain one {0} symbol.</value>
     </data>
     <data name="EmptyOrWhiteSpace" xml:space="preserve">
@@ -36,16 +36,16 @@
     <data name="CannotContainNewLine" xml:space="preserve">
         <value>Value cannot contain a new line.</value>
     </data>
-    <data name="ResultOption_Validation_NewLineWithinContestantResult" xml:space="preserve">
+    <data name="ContestResultParser_Validation_NewLineWithinContestantResult" xml:space="preserve">
         <value>A result must not contain any line breaks, it must be a single line.</value>
     </data>
-    <data name="ResultOption_Validation_NoContestantResult" xml:space="preserve">
+    <data name="ContestResultParser_Validation_NoContestantResult" xml:space="preserve">
         <value>A result must include the results for both contestants. Cannot find a result for contestant {0}.</value>
     </data>
-    <data name="ResultOption_Validation_NoContestantName" xml:space="preserve">
+    <data name="ContestResultParser_Validation_NoContestantName" xml:space="preserve">
         <value>A result must include names for both contestants. Cannot find a name for contestant {0}.</value>
     </data>
-    <data name="ResultOption_Validation_NoContestantScore" xml:space="preserve">
+    <data name="ContestResultParser_Validation_NoContestantScore" xml:space="preserve">
         <value>A result must include scores for both contestants. Cannot find a score for contestant {0}.</value>
     </data>
     <data name="FileOption_Description" xml:space="preserve">
@@ -64,6 +64,24 @@
         <value>The directory (folder) name contains invalid characters and is invalid.</value>
     </data>
     <data name="FileOption_Validation_MissingFileName" xml:space="preserve">
-        <value>The file name is missing or empty and is invalid.</value>
+        <value>The file name is missing or empty.</value>
+    </data>
+    <data name="StorageFactory_NotRegistered" xml:space="preserve">
+        <value>Fatal error: The storage factory is not registered.</value>
+    </data>
+    <data name="CommonAppendFile_Subcommand_FileNotAccessible" xml:space="preserve">
+        <value>The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist.</value>
+    </data>
+    <data name="ContestResultsProcessor_NotRegistered" xml:space="preserve">
+        <value>Fatal error: The contest results processor is not registered.</value>
+    </data>
+    <data name="ContestResultsProcessor_Validation_ParsingError" xml:space="preserve">
+        <value>Error in contestant result {0}: </value>
+    </data>
+    <data name="ContestResultParser_Validation_InvalidStateForGeneration" xml:space="preserve">
+        <value>Cannot generate a valid contest result from invalid input.</value>
+    </data>
+    <data name="ContestResultsProcessor_Processing_Success" xml:space="preserve">
+        <value>Success: Added {0} contest result(s) to the contest results store. Rerun the command without any arguments to see the rankings latest table.</value>
     </data>
 </root>

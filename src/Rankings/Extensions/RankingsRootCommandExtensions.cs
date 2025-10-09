@@ -3,8 +3,11 @@
 
 using System.CommandLine;
 using System.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Rankings.Parsers;
 using Rankings.Resources;
+using Rankings.Services;
+using Rankings.Storage;
 using Rankings.Validators;
 
 namespace Rankings.Extensions;
@@ -34,11 +37,48 @@ public static class RankingsRootCommandExtensions
             Validators = { FileValidator.Validate() }
         };
 
+        /*
+         * The handler for a command is dependent on its options and arguments. As such, the cleanest way to define
+         * the handler is where the options and arguments are defined to avoid brittle abstractions.
+         */
         appendFileCommand.SetAction(result =>
         {
             // The result should never be null.
             Debug.Assert(result != null);
             Debug.Assert(result.GetValue(fileOption) != null);
+
+            try
+            {
+                // Get the option value.
+                var filePath = result.GetValue(fileOption)!;
+                
+                // Resolve dependencies.
+                var storageFactory = serviceProvider.GetService<IStorageFactory>()
+                                     ?? throw new InvalidOperationException(Common.StorageFactory_NotRegistered);
+                var processor = serviceProvider.GetService<IContestResultsProcessor>()
+                                ?? throw new InvalidOperationException(Common.ContestResultsProcessor_NotRegistered);
+                
+                // Get the contest results from the file.
+                var fileReadOnlyStore = storageFactory.CreateFileReadOnlyStore(filePath);
+                if (!fileReadOnlyStore.IsInitialized)
+                {
+                    throw new InvalidOperationException(Common.CommonAppendFile_Subcommand_FileNotAccessible);
+                }
+
+                var contestantResults = fileReadOnlyStore.ReadAllLines();
+                
+                // Process the contest results.
+                processor.Process(contestantResults);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                Environment.ExitCode = 1;
+                return Environment.ExitCode;
+            }
+
+            Environment.ExitCode = 0;
+            return Environment.ExitCode;
         });
         
         appendFileCommand.Add(fileOption);
@@ -63,15 +103,41 @@ public static class RankingsRootCommandExtensions
             name: CommandLineOptions.ResultOption[0],
             aliases: CommandLineOptions.ResultOption[1..])
         {
-            Description = string.Format(Common.ResultOption_Description, ResultParser.ContestantResultSeparator),
+            Description = string.Format(Common.ResultOption_Description, ContestResultParser.ContestantResultSeparator),
             Validators = { ResultValidator.Validate() }
         };
         
+        /*
+         * The handler for a command is dependent on its options and arguments. As such, the cleanest way to define
+         * the handler is where the options and arguments are defined to avoid brittle abstractions.
+         */
         appendResultCommand.SetAction(result =>
         {
             // The result should never be null.
             Debug.Assert(result != null);
             Debug.Assert(result.GetValue(resultOption) != null);
+
+            try
+            {
+                // Get the option value.
+                var contestantResults = new[] { result.GetValue(resultOption)! };
+                
+                // Resolve dependencies.
+                var processor = serviceProvider.GetService<IContestResultsProcessor>()
+                                ?? throw new InvalidOperationException(Common.ContestResultsProcessor_NotRegistered);
+                
+                // Process the contest results.
+                processor.Process(contestantResults);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                Environment.ExitCode = 1;
+                return Environment.ExitCode;
+            }
+
+            Environment.ExitCode = 0;
+            return Environment.ExitCode;
         });
         
         appendResultCommand.Add(resultOption);

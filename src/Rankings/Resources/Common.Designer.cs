@@ -87,6 +87,105 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist..
+        /// </summary>
+        internal static string CommonAppendFile_Subcommand_FileNotAccessible {
+            get {
+                return ResourceManager.GetString("CommonAppendFile_Subcommand_FileNotAccessible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot generate a valid contest result from invalid input..
+        /// </summary>
+        internal static string ContestResultParser_Validation_InvalidStateForGeneration {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_InvalidStateForGeneration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must be separated into two parts by the {0} symbol; one part for each contestant&apos;s name and score..
+        /// </summary>
+        internal static string ContestResultParser_Validation_MissingContestantResultSeparator {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_MissingContestantResultSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result can only contain one {0} symbol..
+        /// </summary>
+        internal static string ContestResultParser_Validation_MultipleContestantResultSeparators {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_MultipleContestantResultSeparators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must not contain any line breaks, it must be a single line..
+        /// </summary>
+        internal static string ContestResultParser_Validation_NewLineWithinContestantResult {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_NewLineWithinContestantResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include names for both contestants. Cannot find a name for contestant {0}..
+        /// </summary>
+        internal static string ContestResultParser_Validation_NoContestantName {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_NoContestantName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include the results for both contestants. Cannot find a result for contestant {0}..
+        /// </summary>
+        internal static string ContestResultParser_Validation_NoContestantResult {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_NoContestantResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A result must include scores for both contestants. Cannot find a score for contestant {0}..
+        /// </summary>
+        internal static string ContestResultParser_Validation_NoContestantScore {
+            get {
+                return ResourceManager.GetString("ContestResultParser_Validation_NoContestantScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal error: The contest results processor is not registered..
+        /// </summary>
+        internal static string ContestResultsProcessor_NotRegistered {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_NotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success: Added {0} contest result(s) to the contest results store. Rerun the command without any arguments to see the rankings latest table..
+        /// </summary>
+        internal static string ContestResultsProcessor_Processing_Success {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_Processing_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in contestant result {0}: .
+        /// </summary>
+        internal static string ContestResultsProcessor_Validation_ParsingError {
+            get {
+                return ResourceManager.GetString("ContestResultsProcessor_Validation_ParsingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value cannot be empty or white-space..
         /// </summary>
         internal static string EmptyOrWhiteSpace {
@@ -123,7 +222,7 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file name is missing or empty and is invalid..
+        ///   Looks up a localized string similar to The file name is missing or empty..
         /// </summary>
         internal static string FileOption_Validation_MissingFileName {
             get {
@@ -141,65 +240,20 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A result must be separated into two parts by the {0} symbol; one part for each contestant&apos;s name and score..
-        /// </summary>
-        internal static string ResultOption_Validation_MissingContestantResultSeparator {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_MissingContestantResultSeparator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A result can only contain one {0} symbol..
-        /// </summary>
-        internal static string ResultOption_Validation_MultipleContestantResultSeparators {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_MultipleContestantResultSeparators", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A result must not contain any line breaks, it must be a single line..
-        /// </summary>
-        internal static string ResultOption_Validation_NewLineWithinContestantResult {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_NewLineWithinContestantResult", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A result must include names for both contestants. Cannot find a name for contestant {0}..
-        /// </summary>
-        internal static string ResultOption_Validation_NoContestantName {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_NoContestantName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A result must include the results for both contestants. Cannot find a result for contestant {0}..
-        /// </summary>
-        internal static string ResultOption_Validation_NoContestantResult {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_NoContestantResult", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A result must include scores for both contestants. Cannot find a score for contestant {0}..
-        /// </summary>
-        internal static string ResultOption_Validation_NoContestantScore {
-            get {
-                return ResourceManager.GetString("ResultOption_Validation_NoContestantScore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Generate a ranking table..
         /// </summary>
         internal static string RootCommand_Description {
             get {
                 return ResourceManager.GetString("RootCommand_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal error: The storage factory is not registered..
+        /// </summary>
+        internal static string StorageFactory_NotRegistered {
+            get {
+                return ResourceManager.GetString("StorageFactory_NotRegistered", resourceCulture);
             }
         }
     }

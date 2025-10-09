@@ -7,10 +7,11 @@ using Rankings.Resources;
 namespace Rankings.Parsers;
 
 /// <summary>
-///     Represents the contestant result parser.
+///     Represents the contest result parser.
 /// </summary>
 /// <remarks>Operates on a single line of input only.</remarks>
-public class ResultParser
+[DebuggerDisplay("{" + nameof(IsValid) + "}", Name = nameof(IsValid))]
+public class ContestResultParser
 {
     /// <summary>
     ///     The character that separates individual contestant results in an input string.
@@ -28,16 +29,16 @@ public class ResultParser
     private const int NotFound = -1;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ResultParser" /> class with the specified input string.
+    ///     Initializes a new instance of the <see cref="ContestResultParser" /> class with the specified input string.
     /// </summary>
-    /// <param name="input">The input to parse for contestant results.</param>
+    /// <param name="input">The input to parse for contest and contestant results.</param>
     /// <exception cref="ArgumentNullException">
     ///     Thrown if <paramref name="input" /> is <see langword="null" />.
     /// </exception>
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="input" /> is empty, consists only of whitespace, or contains new line characters.
     /// </exception>
-    public ResultParser(string input)
+    public ContestResultParser(string input)
     {
         ArgumentNullException.ThrowIfNull(input);
         // Check for new line characters in the input first to avoid ambiguity with whitespace check.
@@ -89,11 +90,11 @@ public class ResultParser
         }
         #endregion
         
-        var contestantResults = inputTrimmed.Split(ContestantResultSeparator);
+        var results = inputTrimmed.Split(ContestantResultSeparator);
         // There should always be exactly two results after splitting by the separator.
-        Debug.Assert(contestantResults.Length == 2);
-        var contestant1ResultString = contestantResults[0].Trim();
-        var contestant2ResultString = contestantResults[1].Trim();
+        Debug.Assert(results.Length == 2);
+        var contestant1ResultString = results[0].Trim();
+        var contestant2ResultString = results[1].Trim();
 
         var contestant1Result = ParseContestantResult(contestant1ResultString);
         var contestant2Result = ParseContestantResult(contestant2ResultString);
@@ -209,7 +210,70 @@ public class ResultParser
     ///     <c>True</c> if the input is missing the contestant result separator; otherwise, <c>false</c>.
     /// </returns>
     public bool IsMissingContestantResultSeparator { get; }
+    
+    /// <summary>
+    ///     Indicates whether the input is valid.
+    /// </summary>
+    public bool IsValid => !HasMultipleContestantResultSeparators
+                          && !IsMissingContestantResultSeparator
+                          && !HasNoContestant1Result
+                          && !HasNoContestant2Result
+                          && !HasNoContestant1Name
+                          && !HasNoContestant1Score
+                          && !HasNoContestant2Name
+                          && !HasNoContestant2Score;
 
+    /// <summary>
+    ///     Gets the parsed <see cref="ContestResult" /> if the input is valid.
+    /// </summary>
+    /// <returns>A <see cref="ContestResult" /> representing the parsed input.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if the input is not valid.</exception>
+    public ContestResult GetContestResult()
+    {
+        if (!IsValid)
+        {
+            throw new InvalidOperationException(Common.ContestResultParser_Validation_InvalidStateForGeneration);
+        }
+        
+        return new ContestResult
+        {
+            Contestant1Name = Contestant1Name,
+            Contestant1Score = Contestant1Score,
+            Contestant2Name = Contestant2Name,
+            Contestant2Score = Contestant2Score
+        };
+    }
+    
+    /// <summary>
+    ///     Gets the next error message, if any, based on the validation flags.
+    /// </summary>
+    /// <returns>The next error message, or <see langword="null" /> if there are no errors.</returns>
+    public string? GetNextError()
+    {
+        var errors = new List<(bool IsError, string ErrorMessage)>
+        {
+            (HasMultipleContestantResultSeparators,
+                string.Format(
+                    Common.ContestResultParser_Validation_MultipleContestantResultSeparators,
+                    ContestantResultSeparator)),
+            (IsMissingContestantResultSeparator,
+                string.Format(
+                    Common.ContestResultParser_Validation_MissingContestantResultSeparator,
+                    ContestantResultSeparator)),
+            (HasNoContestant1Result, string.Format(Common.ContestResultParser_Validation_NoContestantResult, 1)),
+            (HasNoContestant2Result, string.Format(Common.ContestResultParser_Validation_NoContestantResult, 2)),
+            (HasNoContestant1Name, string.Format(Common.ContestResultParser_Validation_NoContestantName, 1)),
+            (HasNoContestant1Score, string.Format(Common.ContestResultParser_Validation_NoContestantScore, 1)),
+            (HasNoContestant2Name, string.Format(Common.ContestResultParser_Validation_NoContestantName, 2)),
+            (HasNoContestant2Score, string.Format(Common.ContestResultParser_Validation_NoContestantScore, 2))
+        };
+        
+        return errors
+            .Where(e => e.IsError)
+            .Select(e => e.ErrorMessage)
+            .FirstOrDefault();
+    }
+    
     /// <summary>
     ///     Parses a contestant result string into a name and score.
     /// </summary>

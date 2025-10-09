@@ -6,9 +6,9 @@ using Rankings.Parsers;
 namespace Rankings.UnitTests.Parsers;
 
 /// <summary>
-///     Unit tests for the <see cref="ResultParser" /> class.
+///     Unit tests for the <see cref="ContestResultParser" /> class.
 /// </summary>
-public class ResultParserTests
+public class ContestResultParserTests
 {
     /// <summary>
     ///     Tests that the constructor throws an <see cref="ArgumentException" /> when the input is empty.
@@ -25,7 +25,7 @@ public class ResultParserTests
     public void Ctor_WithEmptyInput_ThrowsArgumentException(string input)
     {
         // Act
-        var exception = Record.Exception(() => new ResultParser(input));
+        var exception = Record.Exception(() => new ContestResultParser(input));
         
         // Assert
         Assert.NotNull(exception);
@@ -47,91 +47,91 @@ public class ResultParserTests
     /// </remarks>
     [Theory]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}",
+        $"{ContestResultParser.ContestantResultSeparator}",
         "",
         0,
         "",
         0)]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator}",
+        $"10{ContestResultParser.ContestantResultSeparator}",
         "",
         10,
         "",
         0)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}10",
+        $"{ContestResultParser.ContestantResultSeparator}10",
         "",
         0,
         "",
         10)]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator}10",
+        $"10{ContestResultParser.ContestantResultSeparator}10",
         "",
         10,
         "",
         10)]
     [InlineData(
-        $"Alice in Wonderland{ResultParser.ContestantResultSeparator}",
+        $"Alice in Wonderland{ContestResultParser.ContestantResultSeparator}",
         "Alice in Wonderland",
         0,
         "",
         0)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}Bob the Builder",
+        $"{ContestResultParser.ContestantResultSeparator}Bob the Builder",
         "",
         0,
         "Bob the Builder",
         0)]
     [InlineData(
-        $"Alice in Wonderland{ResultParser.ContestantResultSeparator}Bob the Builder",
+        $"Alice in Wonderland{ContestResultParser.ContestantResultSeparator}Bob the Builder",
         "Alice in Wonderland",
         0,
         "Bob the Builder",
         0)]
     [InlineData(
-        $"Alice in Wonderland{ResultParser.ContestantResultSeparator}10",
+        $"Alice in Wonderland{ContestResultParser.ContestantResultSeparator}10",
         "Alice in Wonderland",
         0,
         "",
         10)]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator}Bob the Builder",
+        $"10{ContestResultParser.ContestantResultSeparator}Bob the Builder",
         "",
         10,
         "Bob the Builder",
         0)]
     [InlineData(
-        $"-1{ResultParser.ContestantResultSeparator}",
+        $"-1{ContestResultParser.ContestantResultSeparator}",
         "",
         0,
         "",
         0)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}-1",
+        $"{ContestResultParser.ContestantResultSeparator}-1",
         "",
         0,
         "",
         0)]
     [InlineData(
-        $"Alice in Wonderland-1{ResultParser.ContestantResultSeparator}",
+        $"Alice in Wonderland-1{ContestResultParser.ContestantResultSeparator}",
         "Alice in Wonderland-1",
         0,
         "",
         0)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}Bob the Builder-1",
+        $"{ContestResultParser.ContestantResultSeparator}Bob the Builder-1",
         "",
         0,
         "Bob the Builder-1",
         0)]
     [InlineData(
-        $"-1Alice in Wonderland{ResultParser.ContestantResultSeparator}",
+        $"-1Alice in Wonderland{ContestResultParser.ContestantResultSeparator}",
         "-1Alice in Wonderland",
         0,
         "",
         0)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator}-1Bob the Builder",
+        $"{ContestResultParser.ContestantResultSeparator}-1Bob the Builder",
         "",
         0,
         "-1Bob the Builder",
@@ -144,14 +144,16 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Arrange
-        var contestantResults = input.Split(ResultParser.ContestantResultSeparator);
-        var hasNoContestant1ResultExpected = string.IsNullOrWhiteSpace(contestantResults[0]);
-        var hasNoContestant2ResultExpected = string.IsNullOrWhiteSpace(contestantResults[1]);
+        var results = input.Split(ContestResultParser.ContestantResultSeparator);
+        var hasNoContestant1ResultExpected = string.IsNullOrWhiteSpace(results[0]);
+        var hasNoContestant2ResultExpected = string.IsNullOrWhiteSpace(results[1]);
 
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
 
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
 
@@ -190,7 +192,7 @@ public class ResultParserTests
     public void Ctor_WithNewLineInInput_ThrowsArgumentException(string input)
     {
         // Act
-        var exception = Record.Exception(() => new ResultParser(input));
+        var exception = Record.Exception(() => new ContestResultParser(input));
         
         // Assert
         Assert.NotNull(exception);
@@ -209,7 +211,7 @@ public class ResultParserTests
         string input = null!;
         
         // Act
-        var exception = Record.Exception(() => new ResultParser(input));
+        var exception = Record.Exception(() => new ContestResultParser(input));
         
         // Assert
         Assert.NotNull(exception);
@@ -218,7 +220,7 @@ public class ResultParserTests
     }
     
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.IsMissingContestantResultSeparator" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.IsMissingContestantResultSeparator" />
     ///     to <c>true</c> when the input is missing the contestant result separator, regardless of spacing.
     /// </summary>
     /// <param name="input"></param>
@@ -229,9 +231,11 @@ public class ResultParserTests
     public void Ctor_WithMissingContestantResultSeparator_SetsIsMissingContestantResultSeparatorToTrue(string input)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.True(parser.IsMissingContestantResultSeparator);
         
         Assert.True(parser.HasNoContestant1Name);
@@ -250,30 +254,32 @@ public class ResultParserTests
     }
     
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasMultipleContestantResultSeparators" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasMultipleContestantResultSeparators" />
     ///     to <c>true</c> when the input contains multiple contestant result separators, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
     [Theory]
     [InlineData(
-        $"Alice 10{ResultParser.ContestantResultSeparator} Bob 20{ResultParser.ContestantResultSeparator} Charlie 30")]
+        $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20{ContestResultParser.ContestantResultSeparator} Charlie 30")]
     [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator} Bob 20 {ResultParser.ContestantResultSeparator} Charlie 30")]
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator} Bob 20 {ContestResultParser.ContestantResultSeparator} Charlie 30")]
     [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator}Bob 20 {ResultParser.ContestantResultSeparator}Charlie 30")]
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator}Bob 20 {ContestResultParser.ContestantResultSeparator}Charlie 30")]
     [InlineData(
-        $"Alice 10{ResultParser.ContestantResultSeparator} Bob 20 {ResultParser.ContestantResultSeparator}Charlie 30")]
+        $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20 {ContestResultParser.ContestantResultSeparator}Charlie 30")]
     [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator} Bob 20{ResultParser.ContestantResultSeparator} Charlie 30")]
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator} Bob 20{ContestResultParser.ContestantResultSeparator} Charlie 30")]
     [InlineData(
-        $"Alice 10{ResultParser.ContestantResultSeparator}Bob 20{ResultParser.ContestantResultSeparator}Charlie 30")]
+        $"Alice 10{ContestResultParser.ContestantResultSeparator}Bob 20{ContestResultParser.ContestantResultSeparator}Charlie 30")]
     public void Ctor_WithMultipleContestantResultSeparators_SetsHasMultipleContestantResultSeparatorsToTrue(
         string input)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.True(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -293,7 +299,7 @@ public class ResultParserTests
     }
 
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant1Name" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Name" />
     ///     to <c>true</c> when the input is missing the first contestant name, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -303,37 +309,37 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator} Bob 20",
+        $"10{ContestResultParser.ContestantResultSeparator} Bob 20",
         "",
         10,
         "Bob",
         20)]
     [InlineData(
-        $" 10{ResultParser.ContestantResultSeparator} Bob 20",
+        $" 10{ContestResultParser.ContestantResultSeparator} Bob 20",
         "",
         10,
         "Bob",
         20)]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator} Bob 20 ",
+        $"10{ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "",
         10,
         "Bob",
         20)]
     [InlineData(
-        $" 10{ResultParser.ContestantResultSeparator} Bob 20 ",
+        $" 10{ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "",
         10,
         "Bob",
         20)]
     [InlineData(
-        $"10{ResultParser.ContestantResultSeparator}\tBob 20",
+        $"10{ContestResultParser.ContestantResultSeparator}\tBob 20",
         "",
         10,
         "Bob",
         20)]
     [InlineData(
-        $" 10{ResultParser.ContestantResultSeparator}\tBob 20",
+        $" 10{ContestResultParser.ContestantResultSeparator}\tBob 20",
         "",
         10,
         "Bob",
@@ -346,9 +352,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -368,7 +376,7 @@ public class ResultParserTests
     }
 
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant1Result" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Result" />
     ///     to <c>true</c> when the input is missing the first contestant result, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -376,27 +384,27 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator} Bob 20",
+        $"{ContestResultParser.ContestantResultSeparator} Bob 20",
         "Bob",
         20)]
     [InlineData(
-        $" {ResultParser.ContestantResultSeparator} Bob 20",
+        $" {ContestResultParser.ContestantResultSeparator} Bob 20",
         "Bob",
         20)]
     [InlineData(
-        $"{ResultParser.ContestantResultSeparator} Bob 20 ",
+        $"{ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "Bob",
         20)]
     [InlineData(
-        $" {ResultParser.ContestantResultSeparator} Bob 20 ",
+        $" {ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "Bob",
         20)]
     [InlineData(
-        $" \t {ResultParser.ContestantResultSeparator} Bob 20 ",
+        $" \t {ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "Bob",
         20)]
     [InlineData(
-        $" \t {ResultParser.ContestantResultSeparator} Bob 20 \t ",
+        $" \t {ContestResultParser.ContestantResultSeparator} Bob 20 \t ",
         "Bob",
         20)]
     public void Ctor_WithNoContestant1Result_SetsHasNoContestant1ResultToTrue(
@@ -405,9 +413,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -427,7 +437,7 @@ public class ResultParserTests
     }
     
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant1Score" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Score" />
     ///     to <c>true</c> when the input is missing the first contestant score, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -437,37 +447,37 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"Alice{ResultParser.ContestantResultSeparator} Bob 20",
+        $"Alice{ContestResultParser.ContestantResultSeparator} Bob 20",
         "Alice",
         0,
         "Bob",
         20)]
     [InlineData(
-        $"Alice {ResultParser.ContestantResultSeparator} Bob 20",
+        $"Alice {ContestResultParser.ContestantResultSeparator} Bob 20",
         "Alice",
         0,
         "Bob",
         20)]
     [InlineData(
-        $"Alice{ResultParser.ContestantResultSeparator} Bob 20 ",
+        $"Alice{ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "Alice",
         0,
         "Bob",
         20)]
     [InlineData(
-        $"Alice {ResultParser.ContestantResultSeparator} Bob 20 ",
+        $"Alice {ContestResultParser.ContestantResultSeparator} Bob 20 ",
         "Alice",
         0,
         "Bob",
         20)]
     [InlineData(
-        $"Alice{ResultParser.ContestantResultSeparator}\tBob 20",
+        $"Alice{ContestResultParser.ContestantResultSeparator}\tBob 20",
         "Alice",
         0,
         "Bob",
         20)]
     [InlineData(
-        $"Alice {ResultParser.ContestantResultSeparator}\tBob 20",
+        $"Alice {ContestResultParser.ContestantResultSeparator}\tBob 20",
         "Alice",
         0,
         "Bob",
@@ -480,9 +490,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -502,7 +514,7 @@ public class ResultParserTests
     }
 
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant2Name" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Name" />
     ///     to <c>true</c> when the input is missing the second contestant name, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -512,37 +524,37 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"Alice 20{ResultParser.ContestantResultSeparator} 10",
+        $"Alice 20{ContestResultParser.ContestantResultSeparator} 10",
         "Alice",
         20,
         "",
         10)]
     [InlineData(
-        $"Alice 20 {ResultParser.ContestantResultSeparator} 10",
+        $"Alice 20 {ContestResultParser.ContestantResultSeparator} 10",
         "Alice",
         20,
         "",
         10)]
     [InlineData(
-        $"Alice 20{ResultParser.ContestantResultSeparator} 10 ",
+        $"Alice 20{ContestResultParser.ContestantResultSeparator} 10 ",
         "Alice",
         20,
         "",
         10)]
     [InlineData(
-        $"Alice 20 {ResultParser.ContestantResultSeparator} 10 ",
+        $"Alice 20 {ContestResultParser.ContestantResultSeparator} 10 ",
         "Alice",
         20,
         "",
         10)]
     [InlineData(
-        $"\tAlice 20{ResultParser.ContestantResultSeparator}10",
+        $"\tAlice 20{ContestResultParser.ContestantResultSeparator}10",
         "Alice",
         20,
         "",
         10)]
     [InlineData(
-        $"\tAlice 20 {ResultParser.ContestantResultSeparator} 10",
+        $"\tAlice 20 {ContestResultParser.ContestantResultSeparator} 10",
         "Alice",
         20,
         "",
@@ -555,9 +567,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -577,7 +591,7 @@ public class ResultParserTests
     }
 
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant2Result" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Result" />
     ///     to <c>true</c> when the input is missing the second contestant result, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -585,26 +599,26 @@ public class ResultParserTests
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     [Theory]
     [InlineData(
-        $"Alice 10{ResultParser.ContestantResultSeparator}",
+        $"Alice 10{ContestResultParser.ContestantResultSeparator}",
         "Alice",
         10)]
-    [InlineData($"Alice 10{ResultParser.ContestantResultSeparator} ",
-        "Alice",
-        10)]
-    [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator}",
+    [InlineData($"Alice 10{ContestResultParser.ContestantResultSeparator} ",
         "Alice",
         10)]
     [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator} ",
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator}",
         "Alice",
         10)]
     [InlineData(
-        $"Alice 10 {ResultParser.ContestantResultSeparator}\t",
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator} ",
         "Alice",
         10)]
     [InlineData(
-        $"Alice 10{ResultParser.ContestantResultSeparator}\t",
+        $"Alice 10 {ContestResultParser.ContestantResultSeparator}\t",
+        "Alice",
+        10)]
+    [InlineData(
+        $"Alice 10{ContestResultParser.ContestantResultSeparator}\t",
         "Alice",
         10)]
     public void Ctor_WithNoContestant2Result_SetsHasNoContestant2ResultToTrue(
@@ -613,9 +627,11 @@ public class ResultParserTests
         ushort expectedContestant1Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
 
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -635,7 +651,7 @@ public class ResultParserTests
     }
     
     /// <summary>
-    ///     Tests that the constructor sets <see cref="ResultParser.HasNoContestant2Score" />
+    ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Score" />
     ///     to <c>true</c> when the input is missing the second contestant score, regardless of spacing.
     /// </summary>
     /// <param name="input">The input to parse.</param>
@@ -645,37 +661,37 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"Alice 20{ResultParser.ContestantResultSeparator} Bob",
+        $"Alice 20{ContestResultParser.ContestantResultSeparator} Bob",
         "Alice",
         20,
         "Bob",
         0)]
     [InlineData(
-        $"Alice 20 {ResultParser.ContestantResultSeparator} Bob",
+        $"Alice 20 {ContestResultParser.ContestantResultSeparator} Bob",
         "Alice",
         20,
         "Bob",
         0)]
     [InlineData(
-        $"Alice 20{ResultParser.ContestantResultSeparator} Bob ",
+        $"Alice 20{ContestResultParser.ContestantResultSeparator} Bob ",
         "Alice",
         20,
         "Bob",
         0)]
     [InlineData(
-        $"Alice 20 {ResultParser.ContestantResultSeparator} Bob ",
+        $"Alice 20 {ContestResultParser.ContestantResultSeparator} Bob ",
         "Alice",
         20,
         "Bob",
         0)]
     [InlineData(
-        $"\tAlice 20{ResultParser.ContestantResultSeparator}Bob",
+        $"\tAlice 20{ContestResultParser.ContestantResultSeparator}Bob",
         "Alice",
         20,
         "Bob",
         0)]
     [InlineData(
-        $"\tAlice 20 {ResultParser.ContestantResultSeparator}Bob ",
+        $"\tAlice 20 {ContestResultParser.ContestantResultSeparator}Bob ",
         "Alice",
         20,
         "Bob",
@@ -688,9 +704,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.False(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -719,19 +737,19 @@ public class ResultParserTests
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
     [InlineData(
-        $"Alice 0{ResultParser.ContestantResultSeparator} Bob 0",
+        $"Alice 0{ContestResultParser.ContestantResultSeparator} Bob 0",
         "Alice",
         0,
         "Bob",
         0)]
     [InlineData(
-        $"Alice in Wonderland 0{ResultParser.ContestantResultSeparator} Bob the Builder 0",
+        $"Alice in Wonderland 0{ContestResultParser.ContestantResultSeparator} Bob the Builder 0",
         "Alice in Wonderland",
         0,
         "Bob the Builder",
         0)]
     [InlineData(
-        $"Awesome FC 22{ResultParser.ContestantResultSeparator} Boresome FC 11",
+        $"Awesome FC 22{ContestResultParser.ContestantResultSeparator} Boresome FC 11",
         "Awesome FC",
         22,
         "Boresome FC",
@@ -744,9 +762,11 @@ public class ResultParserTests
         ushort expectedContestant2Score)
     {
         // Act
-        var parser = new ResultParser(input);
+        var parser = new ContestResultParser(input);
         
         // Assert
+        Assert.True(parser.IsValid);
+        
         Assert.False(parser.HasMultipleContestantResultSeparators);
         Assert.False(parser.IsMissingContestantResultSeparator);
         
@@ -763,5 +783,103 @@ public class ResultParserTests
         
         Assert.Equal(expectedContestant2Name, parser.Contestant2Name);
         Assert.Equal(expectedContestant2Score, parser.Contestant2Score);
+    }
+
+    /// <summary>
+    ///     Tests that <see cref="ContestResultParser.GetContestResult" /> throws an
+    ///     <see cref="InvalidOperationException" /> when the input is invalid.
+    /// </summary>
+    [Fact]
+    public void GetContestResult_WithInvalidInput_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        var parser = new ContestResultParser("Alice 10 Bob 20");
+        
+        // Act
+        var exception = Record.Exception(() => parser.GetContestResult());
+        
+        // Assert
+        Assert.NotNull(exception);
+        Assert.IsType<InvalidOperationException>(exception);
+        Assert.Equal("Cannot generate a valid contest result from invalid input.", exception.Message);
+    }
+
+    /// <summary>
+    ///     Tests that <see cref="ContestResultParser.GetContestResult" /> returns a valid
+    ///     <see cref="ContestResult" /> when the input is valid.
+    /// </summary>
+    [Fact]
+    public void GetContestResult_WithValidInput_ReturnsContestResult()
+    {
+        // Arrange
+        var parser = new ContestResultParser($"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20");
+        
+        // Act
+        var actual = parser.GetContestResult();
+        
+        // Assert
+        Assert.NotNull(actual);
+        Assert.Equal("Alice", actual.Contestant1Name);
+        Assert.Equal(10, actual.Contestant1Score);
+        Assert.Equal("Bob", actual.Contestant2Name);
+        Assert.Equal(20, actual.Contestant2Score);
+    }
+    
+    /// <summary>
+    ///     Tests that <see cref="ContestResultParser.GetNextError" /> returns the correct error message for invalid input.
+    /// </summary>
+    /// <param name="input">The input string to validate.</param>
+    /// <param name="expected">The expected error message.</param>
+    [Theory]
+    [InlineData(
+        $"1{ContestResultParser.ContestantResultSeparator}2{ContestResultParser.ContestantResultSeparator}3",
+        $"A result can only contain one {ContestResultParser.ContestantResultSeparator} symbol.")]
+    [InlineData(
+        "12345",
+        $"A result must be separated into two parts by the {ContestResultParser.ContestantResultSeparator} symbol; one part for each contestant's name and score.")]
+    [InlineData(
+        $"{ContestResultParser.ContestantResultSeparator} Bob 20",
+        "A result must include the results for both contestants. Cannot find a result for contestant 1.")]
+    [InlineData(
+        $"Alice 10{ContestResultParser.ContestantResultSeparator}",
+        "A result must include the results for both contestants. Cannot find a result for contestant 2.")]
+    [InlineData(
+        $"10{ContestResultParser.ContestantResultSeparator} Bob 20",
+        "A result must include names for both contestants. Cannot find a name for contestant 1.")]
+    [InlineData(
+        $"Alice{ContestResultParser.ContestantResultSeparator} Bob 20",
+        "A result must include scores for both contestants. Cannot find a score for contestant 1.")]
+    [InlineData(
+        $"Alice 10{ContestResultParser.ContestantResultSeparator}20",
+        "A result must include names for both contestants. Cannot find a name for contestant 2.")]
+    [InlineData(
+        $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob",
+        "A result must include scores for both contestants. Cannot find a score for contestant 2.")]
+    public void GetNextError_WithInvalid_ReturnsErrors(string input, string expected)
+    {
+        // Arrange
+        var parser = new ContestResultParser(input);
+        
+        // Act
+        var actual = parser.GetNextError();
+        
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    /// <summary>
+    ///     Tests that <see cref="ContestResultParser.GetNextError" /> returns <c>null</c> for valid input.
+    /// </summary>
+    [Fact]
+    public void GetNextError_WithValidInput_ReturnsNull()
+    {
+        // Arrange
+        var parser = new ContestResultParser($"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20");
+        
+        // Act
+        var actual = parser.GetNextError();
+        
+        // Assert
+        Assert.Null(actual);
     }
 }

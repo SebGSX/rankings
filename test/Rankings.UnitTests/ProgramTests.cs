@@ -9,7 +9,7 @@ namespace Rankings.UnitTests;
 public class ProgramTests
 {
     /// <summary>
-    ///     Tests that the <see cref="Program.Main"/> method configures the root command with the expected options.
+    ///     Tests that <see cref="Program.Main"/> configures the root command with the expected options.
     /// </summary>
     [Fact]
     public void Main_ConfiguresRootCommandWithExpectedOptions()
@@ -30,7 +30,7 @@ public class ProgramTests
     }
     
     /// <summary>
-    ///     Tests that the <see cref="Program.Main"/> method configures the root command with the expected subcommands.
+    ///     Tests that <see cref="Program.Main"/> configures the root command with the expected subcommands.
     /// </summary>
     [Fact]
     public void Main_ConfiguresRootCommandWithExpectedSubcommands()
@@ -51,7 +51,7 @@ public class ProgramTests
     }
     
     /// <summary>
-    ///     Tests that the <see cref="Program.Main"/> method displays help when called with the "--help" argument.
+    ///     Tests that <see cref="Program.Main"/> displays help when called with the "--help" argument.
     /// </summary>
     /// <param name="arg">The help argument to test.</param>
     [Theory]
@@ -74,7 +74,7 @@ public class ProgramTests
     }
     
     /// <summary>
-    ///     Tests that the <see cref="Program.Main"/> method displays an error message when called with an invalid
+    ///     Tests that <see cref="Program.Main"/> displays an error message when called with an invalid
     ///     argument.
     /// </summary>
     [Fact]
@@ -95,7 +95,7 @@ public class ProgramTests
     }
     
     /// <summary>
-    ///     Tests that the <see cref="Program.Main"/> method does not throw an exception when called with no arguments.
+    ///     Tests that <see cref="Program.Main"/> does not throw an exception when called with no arguments.
     /// </summary>
     [Fact]
     public void Main_WithNoArguments_DoesNotThrow()

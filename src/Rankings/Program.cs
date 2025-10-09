@@ -5,6 +5,7 @@ using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Rankings.Extensions;
 using Rankings.Resources;
+using Rankings.Services;
 using Rankings.Storage;
 
 namespace Rankings;
@@ -27,6 +28,12 @@ public abstract class Program
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddScoped<IStorageFactory, StorageFactory>();
+        serviceCollection.AddScoped<IContestResultsProcessor, ContestResultsProcessor>();
+
+        serviceCollection.Configure<ContestResultsProcessorOptions>(options =>
+        {
+            options.FilePath = "contest-results.jsonl";
+        });
         
         var serviceProvider = serviceCollection.BuildServiceProvider();
         

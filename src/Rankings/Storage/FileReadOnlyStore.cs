@@ -1,6 +1,7 @@
 ﻿// Copyright © 2025 Seb Garrioch. All rights reserved.
 // Published under the MIT License.
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Rankings.Storage;
@@ -8,6 +9,7 @@ namespace Rankings.Storage;
 /// <summary>
 ///     Represents a read only store of text data backed by an operating system file.
 /// </summary>
+[DebuggerDisplay("{" + nameof(FileInfo) + "}", Name = nameof(FileInfo))]
 public class FileReadOnlyStore : IReadOnlyStore
 {
     /// <summary>
@@ -56,8 +58,9 @@ public class FileReadOnlyStore : IReadOnlyStore
     /// <remarks>
     ///     Exceptions are not caught and bubble up to be handled by the caller, which facilitates testing.
     /// </remarks>
+    /// <exception cref="FileNotFoundException">Thrown if the backing file does not exist.</exception>
     [ExcludeFromCodeCoverage(Justification = "File IO is an OS concern.")]
-    public virtual string[] ReadAllLines()
+    public string[] ReadAllLines()
     {
         // Any exception thrown bubbles up to be handled by the caller.
         return !FileInfo.Exists
