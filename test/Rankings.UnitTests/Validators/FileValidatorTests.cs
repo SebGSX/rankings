@@ -25,6 +25,8 @@ public class FileValidatorTests
         "The file name contains invalid characters and is invalid.")]
     [InlineData($"append-file --file \"/\n/filename.txt\"",
         "The directory (folder) name contains invalid characters and is invalid.")]
+    [InlineData("append-file --file \"\"", "The file name is missing or empty and is invalid.")]
+    [InlineData("append-file --file \"./\"", "The file name is missing or empty and is invalid.")]
     public void Validate_WithError_AddsError(string input, string expected)
     {
         // Arrange

@@ -123,6 +123,15 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file name is missing or empty and is invalid..
+        /// </summary>
+        internal static string FileOption_Validation_MissingFileName {
+            get {
+                return ResourceManager.GetString("FileOption_Validation_MissingFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adds a single contest result to the results file. A result must be in the form: &quot;&lt;CONTESTANT-1&gt; &lt;SCORE-1&gt;, &lt;CONTESTANT-2&gt; &lt;SCORE-2&gt;&quot;. Replace &lt;CONTESTANT-n&gt; with the contestants&apos; names such as, Team One, Team Two, etc. Names cannot start with - or --, and they cannot include the {0} symbol. Scores must be non-negative, whole numbers without any separator symbols, which means for example that 1000 is appropriate but 1,000 is not. Example: rankings -r &quot;My Team 1{0} Other Team 0&quot;.
         /// </summary>
         internal static string ResultOption_Description {

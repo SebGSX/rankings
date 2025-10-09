@@ -26,19 +26,32 @@ public abstract class FileValidator
             Debug.Assert(result != null);
             Debug.Assert(result.GetValueOrDefault<string>() != null);
             
-            var fileInfo = new FileInfo(result.GetValueOrDefault<string>());
-            var hasFileName = !string.IsNullOrWhiteSpace(fileInfo.Name);
-            var hasDirectoryName = !string.IsNullOrWhiteSpace(fileInfo.DirectoryName);
+            var filePath = result.GetValueOrDefault<string>();
+            var hasFilePath = !string.IsNullOrWhiteSpace(filePath);
             
             // Identify validation errors in the order they should be reported.
             var validations = new List<(bool IsError, string ErrorMessage)>
             {
-                (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
-                    Common.FileOption_Validation_InvalidFileName),
-                (hasDirectoryName && fileInfo.DirectoryName!.IndexOfAny(Path.GetInvalidPathChars()) != notFound,
-                    Common.FileOption_Validation_InvalidDirectoryName),
+                (!hasFilePath, Common.FileOption_Validation_MissingFileName)
             };
-            
+
+            // Guard against missing or empty file path before checking for invalid characters.
+            if (hasFilePath)
+            {
+                var fileInfo = new FileInfo(filePath);
+                var hasFileName = !string.IsNullOrWhiteSpace(fileInfo.Name);
+
+                // Identify validation errors in the order they should be reported.
+                validations.AddRange(new List<(bool, string)>
+                {
+                    (!hasFileName, Common.FileOption_Validation_MissingFileName),
+                    (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
+                        Common.FileOption_Validation_InvalidFileName),
+                    (fileInfo.DirectoryName!.IndexOfAny(Path.GetInvalidPathChars()) != notFound,
+                        Common.FileOption_Validation_InvalidDirectoryName),
+                });
+            }
+
             foreach (var (isError, errorMessage) in validations)
             {
                 if (!isError) continue;

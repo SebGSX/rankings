@@ -63,4 +63,7 @@
     <data name="FileOption_Validation_InvalidDirectoryName" xml:space="preserve">
         <value>The directory (folder) name contains invalid characters and is invalid.</value>
     </data>
+    <data name="FileOption_Validation_MissingFileName" xml:space="preserve">
+        <value>The file name is missing or empty and is invalid.</value>
+    </data>
 </root>
