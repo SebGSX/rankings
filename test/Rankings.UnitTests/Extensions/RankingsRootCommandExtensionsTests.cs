@@ -157,6 +157,10 @@ public class RankingsRootCommandExtensionsTests
         Assert.NotEmpty(subcommand.Description);
     }
 
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddClearContestResultsSubcommand" />
+    ///     handles invocation correctly.
+    /// </summary>
     [Fact]
     public void AddClearContestResultsSubcommand_Handler_HandlesInvocation()
     {
