@@ -30,7 +30,7 @@ public abstract class FileValidator
             var hasFilePath = !string.IsNullOrWhiteSpace(filePath);
             
             // Identify validation errors in the order they should be reported.
-            var validations = new List<(bool IsError, string ErrorMessage)>
+            var errors = new List<(bool IsError, string ErrorMessage)>
             {
                 (!hasFilePath, Common.FileOption_Validation_MissingFileName)
             };
@@ -42,7 +42,7 @@ public abstract class FileValidator
                 var hasFileName = !string.IsNullOrWhiteSpace(fileInfo.Name);
 
                 // Identify validation errors in the order they should be reported.
-                validations.AddRange(new List<(bool, string)>
+                errors.AddRange(new List<(bool, string)>
                 {
                     (!hasFileName, Common.FileOption_Validation_MissingFileName),
                     (hasFileName && fileInfo.Name.IndexOfAny(Path.GetInvalidFileNameChars()) != notFound,
@@ -52,11 +52,14 @@ public abstract class FileValidator
                 });
             }
 
-            foreach (var (isError, errorMessage) in validations)
+            var error = errors
+                .Where(e => e.IsError)
+                .Select(e => e.ErrorMessage)
+                .FirstOrDefault();
+            
+            if (!string.IsNullOrEmpty(error))
             {
-                if (!isError) continue;
-                result.AddError(errorMessage);
-                return;
+                result.AddError(error);
             }
         };
     }

@@ -21,12 +21,12 @@ public class FileValidatorTests
     /// <param name="expected">The expected error message.</param>
     [Theory]
     [InlineData("append-file --file", "Required argument missing for option: '--file'.")]
-    [InlineData("append-file --file \"invalid-filename-*.txt\"",
+    [InlineData("append-file --file \"invalid-file-name-*.txt\"",
         "The file name contains invalid characters and is invalid.")]
-    [InlineData($"append-file --file \"/\n/filename.txt\"",
+    [InlineData($"append-file --file \"/\n/file-name.txt\"",
         "The directory (folder) name contains invalid characters and is invalid.")]
-    [InlineData("append-file --file \"\"", "The file name is missing or empty and is invalid.")]
-    [InlineData("append-file --file \"./\"", "The file name is missing or empty and is invalid.")]
+    [InlineData("append-file --file \"\"", "The file name is missing or empty.")]
+    [InlineData("append-file --file \"./\"", "The file name is missing or empty.")]
     public void Validate_WithError_AddsError(string input, string expected)
     {
         // Arrange
@@ -53,7 +53,7 @@ public class FileValidatorTests
         var rootCommand = new RootCommand();
         var serviceProviderMockObject = Mock.Of<IServiceProvider>();
         rootCommand.AddAppendFileSubcommand(serviceProviderMockObject);
-        const string input = "append-file --file \"valid-filename.txt\"";
+        const string input = "append-file --file \"valid-file-name.txt\"";
 
         // Act
         var parseResult = rootCommand.Parse(input);
