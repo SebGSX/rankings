@@ -239,6 +239,36 @@ public class RankingsRootCommandExtensionsTests
         resultsProcessorMock
             .Verify(m => m.Process(It.IsAny<string[]>()), Times.Once);
     }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddAppendResultSubcommand" />
+    ///     displays an error message when the contest results processor is not registered.
+    /// </summary>
+    [Fact]
+    public void AddAppendResultSubcommand_Handler_WhenNullProcessor_DisplaysError()
+    {
+        // Arrange
+        const string contestantResult = "Alice 10, Bob 20";
+        var rootCommand = new RootCommand();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        
+        rootCommand.AddAppendResultSubcommand(serviceProviderMock.Object);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse($"append-result --result \"{contestantResult}\"");
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("Fatal error: The contest results processor is not registered.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
+    }
 
     /// <summary>
     ///     Tests that <see cref="RankingsRootCommandExtensions.AddClearContestResultsSubcommand" /> correctly adds
@@ -292,6 +322,35 @@ public class RankingsRootCommandExtensionsTests
         resultsProcessorMock
             .Verify(m => m.ClearContestResults(), Times.Once);
     }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddClearContestResultsSubcommand" />
+    ///     displays an error message when the contest results processor is not registered.
+    /// </summary>
+    [Fact]
+    public void AddClearContestResultsSubcommand_Handler_WhenNullProcessor_DisplaysError()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        
+        rootCommand.AddClearContestResultsSubcommand(serviceProviderMock.Object);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse("clear-contest-results");
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("Fatal error: The contest results processor is not registered.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
+    }
 
     /// <summary>
     ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.SetRootCommandAction" />
@@ -320,5 +379,34 @@ public class RankingsRootCommandExtensionsTests
         serviceProviderMock.Verify(m => m.GetService(typeof(IContestResultsProcessor)), Times.Once);
         resultsProcessorMock
             .Verify(m => m.DisplayRankingTable(), Times.Once);
+    }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.SetRootCommandAction" />
+    ///     displays an error message when the contest results processor is not registered.
+    /// </summary>
+    [Fact]
+    public void SetRootCommandAction_Handler_WhenNullProcessor_DisplaysError()
+    {
+        // Arrange
+        var rootCommand = new RootCommand();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        
+        rootCommand.SetRootCommandAction(serviceProviderMock.Object);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse(string.Empty);
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("Fatal error: The contest results processor is not registered.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
     }
 }

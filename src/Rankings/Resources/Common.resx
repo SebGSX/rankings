@@ -63,15 +63,6 @@
     <data name="AppendResult_Subcommand_Description" xml:space="preserve">
         <value>Appends a single contest result to the results file.</value>
     </data>
-    <data name="FileOption_Validation_InvalidFileName" xml:space="preserve">
-        <value>The file name contains invalid characters and is invalid.</value>
-    </data>
-    <data name="FileOption_Validation_InvalidDirectoryName" xml:space="preserve">
-        <value>The directory (folder) name contains invalid characters and is invalid.</value>
-    </data>
-    <data name="FileOption_Validation_MissingFileName" xml:space="preserve">
-        <value>The file name is missing or empty.</value>
-    </data>
     <data name="StorageFactory_NotRegistered" xml:space="preserve">
         <value>Fatal error: The storage factory is not registered.</value>
     </data>
@@ -110,5 +101,8 @@
     </data>
     <data name="ContestResultsProcessor_DisplayRankingTable_Row" xml:space="preserve">
         <value>{0}. {1}, {2} {3}</value>
+    </data>
+    <data name="FileOption_Validation_MissingFileName" xml:space="preserve">
+        <value>The file name is missing or empty.</value>
     </data>
 </root>
