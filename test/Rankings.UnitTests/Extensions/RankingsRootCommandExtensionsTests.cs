@@ -78,6 +78,113 @@ public class RankingsRootCommandExtensionsTests
         resultsProcessorMock
             .Verify(m => m.Process(It.IsAny<string[]>()), Times.Once);
     }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddAppendFileSubcommand" />
+    ///     displays an error message when the storage factory is not registered.
+    /// </summary>
+    [Fact]
+    public void AddAppendFileSubcommand_Handler_WhenNullStorageFactory_DisplaysError()
+    {
+        // Arrange
+        const string fileName = "test.txt";
+        var rootCommand = new RootCommand();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        
+        rootCommand.AddAppendFileSubcommand(serviceProviderMock.Object);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse($"append-file --file \"{fileName}\"");
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("Fatal error: The storage factory is not registered.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
+    }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddAppendFileSubcommand" />
+    ///     displays an error message when the contest results processor is not registered.
+    /// </summary>
+    [Fact]
+    public void AddAppendFileSubcommand_Handler_WhenNullProcessor_DisplaysError()
+    {
+        // Arrange
+        const string fileName = "test.txt";
+        var rootCommand = new RootCommand();
+        
+        var storageFactoryMock = new Mock<IStorageFactory>();
+        
+        var serviceProviderMock = new Mock<IServiceProvider>();
+        
+        rootCommand.AddAppendFileSubcommand(serviceProviderMock.Object);
+        
+        serviceProviderMock.Setup(m => m.GetService(typeof(IStorageFactory)))
+            .Returns(storageFactoryMock.Object);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse($"append-file --file \"{fileName}\"");
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("Fatal error: The contest results processor is not registered.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
+    }
+    
+    /// <summary>
+    ///     Tests that the handler defined in <see cref="RankingsRootCommandExtensions.AddAppendFileSubcommand" />
+    ///     displays an error message when the file store is not initialized.
+    /// </summary>
+    [Fact]
+    public void AddAppendFileSubcommand_Handler_WhenStoreNotInitialized_DisplaysError()
+    {
+        // Arrange
+        const string fileName = "test.txt";
+        var rootCommand = new RootCommand();
+
+        var resultsProcessorMock = new Mock<IContestResultsProcessor>();
+        var fileReadOnlyStoreMock = new Mock<IReadOnlyStore>();
+        var storageFactoryMock = new Mock<IStorageFactory>();
+
+        var serviceProviderMock = new Mock<IServiceProvider>();
+
+        rootCommand.AddAppendFileSubcommand(serviceProviderMock.Object);
+
+        serviceProviderMock.Setup(m => m.GetService(typeof(IContestResultsProcessor)))
+            .Returns(resultsProcessorMock.Object);
+        serviceProviderMock.Setup(m => m.GetService(typeof(IStorageFactory)))
+            .Returns(storageFactoryMock.Object);
+        storageFactoryMock.Setup(m => m.CreateFileReadOnlyStore(It.IsAny<string>()))
+            .Returns(fileReadOnlyStoreMock.Object);
+        fileReadOnlyStoreMock.Setup(m => m.IsInitialized).Returns(false);
+        
+        using var sw = new StringWriter();
+        var originalError = Console.Error;
+        Console.SetError(sw);
+        
+        // Act
+        var parseResult = rootCommand.Parse($"append-file --file \"{fileName}\"");
+        parseResult.Invoke();
+        
+        // Assert
+        Assert.Contains("The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist.", sw.ToString());
+        
+        // Cleanup
+        Console.SetError(originalError);
+    }
 
     /// <summary>
     ///     Tests that <see cref="RankingsRootCommandExtensions.AddAppendResultSubcommand" /> correctly adds

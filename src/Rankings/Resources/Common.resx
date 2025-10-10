@@ -75,7 +75,7 @@
     <data name="StorageFactory_NotRegistered" xml:space="preserve">
         <value>Fatal error: The storage factory is not registered.</value>
     </data>
-    <data name="CommonAppendFile_Subcommand_FileNotAccessible" xml:space="preserve">
+    <data name="AppendFile_Subcommand_FileNotAccessible" xml:space="preserve">
         <value>The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist.</value>
     </data>
     <data name="ContestResultsProcessor_NotRegistered" xml:space="preserve">
