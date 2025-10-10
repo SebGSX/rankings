@@ -11,7 +11,7 @@ namespace Rankings.UnitTests.Storage;
 public class FileStoreTests
 {
     /// <summary>
-    ///     Tests that the constructor throws an <see cref="ArgumentNullException" /> when the input is <c>null</c>.
+    ///     Tests that the constructor throws an <see cref="ArgumentNullException" /> when the full name is <c>null</c>.
     /// </summary>
     [Fact]
     public void Ctor_WithNullFileInfo_ThrowsArgumentNullException()
@@ -29,14 +29,20 @@ public class FileStoreTests
     }
 
     /// <summary>
-    ///     Tests that the constructor throws an <see cref="ArgumentException" /> when the input is empty.
+    ///     Tests that the constructor throws an <see cref="ArgumentException" /> when the full name is empty.
     /// </summary>
-    [Fact]
-    public void Ctor_WithEmptyFileInfo_ThrowsArgumentException()
+    /// <param name="fullName">The full name to test.</param>
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("  ")]
+    [InlineData("\n")]
+    [InlineData("\r")]
+    [InlineData("\t")]
+    [InlineData("\r\n")]
+    [InlineData("\r\n\t")]
+    public void Ctor_WithEmptyFileInfo_ThrowsArgumentException(string fullName)
     {
-        // Arrange
-        const string fullName = "";
-
         // Act
         var exception = Record.Exception(() => new FileStore(fullName));
 

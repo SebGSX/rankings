@@ -151,6 +151,28 @@ public class ContestResultsProcessorTests
         // Cleanup
         Console.SetOut(originalOut);
     }
+    
+    /// <summary>
+    ///     Tests that <see cref="ContestResultsProcessor.Process(string[])" /> throws an
+    ///     <see cref="ArgumentNullException" /> when the contest results is <c>null</c>.
+    /// </summary>
+    [Fact]
+    public void CreateFileReadOnlyStore_WithNullFullName_ThrowsArgumentNullException()
+    {
+        // Arrange
+        var options = Options.Create(new ContestResultsProcessorOptions { FilePath = "test.json" });
+        var storageFactoryMock = new Mock<IStorageFactory>();
+        var processor = new ContestResultsProcessor(options, storageFactoryMock.Object);
+        string[] contestResults = null!;
+
+        // Act
+        var exception = Record.Exception(() => processor.Process(contestResults));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.IsType<ArgumentNullException>(exception);
+        Assert.Equal("contestResults", ((ArgumentNullException)exception).ParamName);
+    }
 
     /// <summary>
     ///     Tests that <see cref="ContestResultsProcessor.Process" /> throws an <see cref="InvalidOperationException" />

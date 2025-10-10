@@ -109,6 +109,8 @@ public class ContestResultsProcessor : IContestResultsProcessor
     /// <exception cref="InvalidOperationException">Thrown if any of the results are invalid.</exception>
     public void Process(string[] contestResults)
     {
+        ArgumentNullException.ThrowIfNull(contestResults);
+        
         var parsedResults = new List<ContestResultParser>();
         ContestResultParser? error = null;
         foreach (var contestantResult in contestResults)

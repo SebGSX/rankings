@@ -29,7 +29,6 @@ public class FileReadOnlyStore : IReadOnlyStore
     /// </exception>
     public FileReadOnlyStore(string fullName)
     {
-        ArgumentNullException.ThrowIfNull(fullName);
         ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
         FileInfo = new FileInfo(fullName);
     }

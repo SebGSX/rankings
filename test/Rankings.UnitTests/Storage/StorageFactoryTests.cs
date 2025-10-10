@@ -14,6 +14,7 @@ public class StorageFactoryTests
     ///     Tests that <see cref="StorageFactory.CreateFileReadOnlyStore(string)" /> throws an
     ///     <see cref="ArgumentException" /> when the input is <c>null</c>.
     /// </summary>
+    /// <param name="fullName">The full name to test.</param>
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -23,13 +24,13 @@ public class StorageFactoryTests
     [InlineData("\t")]
     [InlineData("\r\n")]
     [InlineData("\r\n\t")]
-    public void CreateFileReadOnlyStore_WithNullFullName_ThrowsArgumentException(string input)
+    public void CreateFileReadOnlyStore_WithNullFullName_ThrowsArgumentException(string fullName)
     {
         // Arrange
         var storageFactory = new StorageFactory();
 
         // Act
-        var exception = Record.Exception(() => storageFactory.CreateFileReadOnlyStore(input));
+        var exception = Record.Exception(() => storageFactory.CreateFileReadOnlyStore(fullName));
 
         // Assert
         Assert.NotNull(exception);
@@ -78,9 +79,9 @@ public class StorageFactoryTests
 
     /// <summary>
     ///     Tests that <see cref="StorageFactory.CreateFileStore(string)" /> throws an
-    ///     <see cref="ArgumentException" /> when the input is <c>null</c>.
+    ///     <see cref="ArgumentException" /> when the full name is <c>null</c>.
     /// </summary>
-    /// <param name="input">The input to test.</param>
+    /// <param name="fullName">The full name to test.</param>
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -90,13 +91,13 @@ public class StorageFactoryTests
     [InlineData("\t")]
     [InlineData("\r\n")]
     [InlineData("\r\n\t")]
-    public void CreateFileStore_WithNullFullName_ThrowsArgumentException(string input)
+    public void CreateFileStore_WithNullFullName_ThrowsArgumentException(string fullName)
     {
         // Arrange
         var storageFactory = new StorageFactory();
 
         // Act
-        var exception = Record.Exception(() => storageFactory.CreateFileStore(input));
+        var exception = Record.Exception(() => storageFactory.CreateFileStore(fullName));
 
         // Assert
         Assert.NotNull(exception);
