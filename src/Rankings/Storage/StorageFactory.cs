@@ -12,8 +12,7 @@ public class StorageFactory : IStorageFactory
     /// </exception>
     public IReadOnlyStore CreateFileReadOnlyStore(string fullName)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
-
+        // Full name validity checks are performed by the FileReadOnlyStore constructor.
         return new FileReadOnlyStore(fullName);
     }
 
@@ -23,8 +22,7 @@ public class StorageFactory : IStorageFactory
     /// </exception>
     public IStore CreateFileStore(string fullName)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
-
+        // Full name validity checks are performed by the FileStore constructor.
         return new FileStore(fullName);
     }
 }
