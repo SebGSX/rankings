@@ -48,6 +48,10 @@ public class ContestResultsProcessorTests
             .Setup(m => m.CreateFileStore(It.IsAny<string>()))
             .Returns(fileStoreMock.Object);
         fileStoreMock.Setup(m => m.IsInitialized).Returns(true);
+        
+        var originalOut = Console.Out;
+        using var sw = new StringWriter();
+        Console.SetOut(sw);
 
         // Act
         processor.ClearContestResults();
@@ -56,6 +60,11 @@ public class ContestResultsProcessorTests
         storageFactoryMock.Verify(m => m.CreateFileStore(options.Value.FilePath), Times.Once);
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Reset(), Times.Once);
+        
+        Assert.Contains("Success: The contest results store has been cleared.", sw.ToString());
+        
+        // Cleanup
+        Console.SetOut(originalOut);
     }
 
     /// <summary>
@@ -253,6 +262,10 @@ public class ContestResultsProcessorTests
             $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20",
             $"Charlie 15{ContestResultParser.ContestantResultSeparator} Dana 15"
         };
+        
+        var originalOut = Console.Out;
+        using var sw = new StringWriter();
+        Console.SetOut(sw);
 
         // Act
         processor.Process(contestResults);
@@ -262,5 +275,10 @@ public class ContestResultsProcessorTests
         fileStoreMock.Verify(m => m.IsInitialized, Times.Once);
         fileStoreMock.Verify(m => m.Initialize(), Times.Once);
         fileStoreMock.Verify(m => m.AppendAllLines(It.IsAny<string[]>()), Times.Once);
+        
+        Assert.Contains($"Success: Added {contestResults.Length} contest result(s) to the contest results store. Rerun the command without any arguments to see the rankings latest table.", sw.ToString());
+        
+        // Cleanup
+        Console.SetOut(originalOut);
     }
 }
