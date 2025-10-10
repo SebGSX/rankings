@@ -69,6 +69,15 @@ namespace Rankings.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist..
+        /// </summary>
+        internal static string AppendFile_Subcommand_FileNotAccessible {
+            get {
+                return ResourceManager.GetString("AppendFile_Subcommand_FileNotAccessible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appends a single contest result to the results file..
         /// </summary>
         internal static string AppendResult_Subcommand_Description {
@@ -92,15 +101,6 @@ namespace Rankings.Resources {
         internal static string ClearContestResults_Subcommand_Description {
             get {
                 return ResourceManager.GetString("ClearContestResults_Subcommand_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file specified cannot be accessed. The file name and path may be incorrect, the file may not be accessible, or the file may not exist..
-        /// </summary>
-        internal static string CommonAppendFile_Subcommand_FileNotAccessible {
-            get {
-                return ResourceManager.GetString("CommonAppendFile_Subcommand_FileNotAccessible", resourceCulture);
             }
         }
         
@@ -263,24 +263,6 @@ namespace Rankings.Resources {
         internal static string FileOption_Description {
             get {
                 return ResourceManager.GetString("FileOption_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The directory (folder) name contains invalid characters and is invalid..
-        /// </summary>
-        internal static string FileOption_Validation_InvalidDirectoryName {
-            get {
-                return ResourceManager.GetString("FileOption_Validation_InvalidDirectoryName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file name contains invalid characters and is invalid..
-        /// </summary>
-        internal static string FileOption_Validation_InvalidFileName {
-            get {
-                return ResourceManager.GetString("FileOption_Validation_InvalidFileName", resourceCulture);
             }
         }
         

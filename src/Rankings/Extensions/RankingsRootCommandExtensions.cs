@@ -61,7 +61,7 @@ public static class RankingsRootCommandExtensions
                 // Get the contest results from the file.
                 var fileReadOnlyStore = storageFactory.CreateFileReadOnlyStore(filePath);
                 if (!fileReadOnlyStore.IsInitialized)
-                    throw new InvalidOperationException(Common.CommonAppendFile_Subcommand_FileNotAccessible);
+                    throw new InvalidOperationException(Common.AppendFile_Subcommand_FileNotAccessible);
 
                 var contestantResults = fileReadOnlyStore.ReadAllLines();
 
