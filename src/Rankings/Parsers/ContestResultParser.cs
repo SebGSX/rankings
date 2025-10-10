@@ -31,7 +31,7 @@ public class ContestResultParser
     /// <summary>
     ///     Initializes a new instance of the <see cref="ContestResultParser" /> class with the specified input string.
     /// </summary>
-    /// <param name="input">The input to parse for contest and contestant results.</param>
+    /// <param name="input">The input to test.</param>
     /// <exception cref="ArgumentNullException">
     ///     Thrown if <paramref name="input" /> is <see langword="null" />.
     /// </exception>

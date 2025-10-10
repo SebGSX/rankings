@@ -7,23 +7,23 @@ namespace Rankings.Storage;
 public class StorageFactory : IStorageFactory
 {
     /// <inheritdoc />
-    /// <exception cref="ArgumentNullException">
+    /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="fullName" /> is <see langword="null" />.
     /// </exception>
     public IReadOnlyStore CreateFileReadOnlyStore(string fullName)
     {
-        ArgumentNullException.ThrowIfNull(fullName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
 
         return new FileReadOnlyStore(fullName);
     }
 
     /// <inheritdoc />
-    /// <exception cref="ArgumentNullException">
+    /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="fullName" /> is <see langword="null" />.
     /// </exception>
     public IStore CreateFileStore(string fullName)
     {
-        ArgumentNullException.ThrowIfNull(fullName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
 
         return new FileStore(fullName);
     }

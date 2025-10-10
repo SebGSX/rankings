@@ -12,6 +12,33 @@ public class StorageFactoryTests
 {
     /// <summary>
     ///     Tests that <see cref="StorageFactory.CreateFileReadOnlyStore(string)" /> throws an
+    ///     <see cref="ArgumentException" /> when the input is <c>null</c>.
+    /// </summary>
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("  ")]
+    [InlineData("\n")]
+    [InlineData("\r")]
+    [InlineData("\t")]
+    [InlineData("\r\n")]
+    [InlineData("\r\n\t")]
+    public void CreateFileReadOnlyStore_WithNullFullName_ThrowsArgumentException(string input)
+    {
+        // Arrange
+        var storageFactory = new StorageFactory();
+
+        // Act
+        var exception = Record.Exception(() => storageFactory.CreateFileReadOnlyStore(input));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.IsType<ArgumentException>(exception);
+        Assert.Equal("fullName", ((ArgumentException)exception).ParamName);
+    }
+    
+    /// <summary>
+    ///     Tests that <see cref="StorageFactory.CreateFileReadOnlyStore(string)" /> throws an
     ///     <see cref="ArgumentNullException" /> when the input is <c>null</c>.
     /// </summary>
     [Fact]
@@ -49,6 +76,34 @@ public class StorageFactoryTests
         Assert.IsType<FileReadOnlyStore>(store);
     }
 
+    /// <summary>
+    ///     Tests that <see cref="StorageFactory.CreateFileStore(string)" /> throws an
+    ///     <see cref="ArgumentException" /> when the input is <c>null</c>.
+    /// </summary>
+    /// <param name="input">The input to test.</param>
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("  ")]
+    [InlineData("\n")]
+    [InlineData("\r")]
+    [InlineData("\t")]
+    [InlineData("\r\n")]
+    [InlineData("\r\n\t")]
+    public void CreateFileStore_WithNullFullName_ThrowsArgumentException(string input)
+    {
+        // Arrange
+        var storageFactory = new StorageFactory();
+
+        // Act
+        var exception = Record.Exception(() => storageFactory.CreateFileStore(input));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.IsType<ArgumentException>(exception);
+        Assert.Equal("fullName", ((ArgumentException)exception).ParamName);
+    }
+    
     /// <summary>
     ///     Tests that <see cref="StorageFactory.CreateFileStore(string)" /> throws an
     ///     <see cref="ArgumentNullException" /> when the input is <c>null</c>.

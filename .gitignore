@@ -9,6 +9,9 @@
 # SonarQube
 .sonarqube/
 
+# Stryker
+[Ss]trykerOutput/
+
 # dotnet-coverage XML
 coverage.xml
 

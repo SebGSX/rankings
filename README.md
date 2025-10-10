@@ -28,34 +28,19 @@ To run the app, please ensure that [.NET 9.0 SDK](https://dotnet.microsoft.com/d
 
 ### Usage
 
-The app is run from the command line using its executable `rankings`. To get help, use the `--help` or `-h` option.
+The app is run from the command line using its executable `rankings`. Please see the following table for common
+tasks and their corresponding commands or options:
 
-To add a contest result to the rankings, use the following command:
+| Task                                                          | Command/Option                                     |
+|---------------------------------------------------------------|----------------------------------------------------|
+| Get help information.                                         | `rankings --help` or `rankings -h`                 |
+| Add a contest result, e.g. "Red 1, Blue 2".                   | `rankings append-result --result "Red 1, Blue 2"`  |
+| Add multiple contest results from a file, e.g. "results.txt". | `rankings append-file --file "results.txt"`        |
+| View current rankings.                                        | `rankings`                                         |
+| Clear all rankings.                                           | `rankings clear-contest-results`                   |
 
-```shell
-rankings append-result --result "Red 1, Blue 2"
-```
-
-To add multiple contest results from a file, use the following command:
-
-```shell
-rankings append-file --file "contest-results.txt"
-```
-
-> *Note:* The `contest-results.txt` file should contain one contest result per line in the format
+> *Note:* The file should contain one contest result per line in the format 
 > `Contestant1Name Contestant1Score, Contestant2Name Contestant2Score`, e.g. `Red 1, Blue 2`.
-
-To view the current rankings, use the following command:
-
-```shell
-rankings
-```
-
-To clear the current rankings, use the following command:
-
-```shell
-rankings clear-contest-results
-```
 
 ### GitHub Project
 
@@ -124,6 +109,22 @@ Code quality is supported using a variety of tools, including:
 - **ReSharper:** Used to perform static code analysis and provide code quality suggestions within the IDE.
 - **Unit Tests:** The project is covered by unit tests using xUnit and Moq. Code coverage is reported to SonarQube
   Cloud.
+- **Stryker Mutator:** Used to perform mutation testing to ensure the quality of the unit tests.
+
+#### Stryker Mutator
+
+The [Stryker Mutator](https://stryker-mutator.io/) tool must be installed locally using the following command from the
+command line at the project's root directory:
+
+```shell
+dotnet tool restore
+```
+
+To run mutation testing, use the following command from the command line at the project's root directory:
+
+```shell
+dotnet stryker
+```
 
 ### Building
 

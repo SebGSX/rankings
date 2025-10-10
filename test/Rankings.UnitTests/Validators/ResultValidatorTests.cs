@@ -18,7 +18,7 @@ public class ResultValidatorTests
     ///     Tests that <see cref="ResultValidator.Validate" /> adds an error to the parse result when the input is
     ///     invalid.
     /// </summary>
-    /// <param name="input">The input string to validate.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expected">The expected error message.</param>
     [Theory]
     [InlineData("append-result --result", "Required argument missing for option: '--result'.")]

@@ -13,7 +13,7 @@ public class ContestResultParserTests
     /// <summary>
     ///     Tests that the constructor throws an <see cref="ArgumentException" /> when the input is empty.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -37,7 +37,7 @@ public class ContestResultParserTests
     /// <summary>
     ///     Tests that the constructor sets all flags correctly when the input is invalid in multiple ways.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -175,7 +175,7 @@ public class ContestResultParserTests
     /// <summary>
     ///     Tests that the constructor throws an <see cref="ArgumentException" /> when the input contains a new line.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     [Theory]
     [InlineData("Alice 1 \r Bob 2")]
     [InlineData("Alice 1 \n Bob 2")]
@@ -223,7 +223,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.IsMissingContestantResultSeparator" />
     ///     to <c>true</c> when the input is missing the contestant result separator, regardless of spacing.
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="input">The input to test.</param>
     [Theory]
     [InlineData("Alice 10 Bob 20")]
     [InlineData("Alice 10  Bob 20")]
@@ -257,7 +257,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasMultipleContestantResultSeparators" />
     ///     to <c>true</c> when the input contains multiple contestant result separators, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     [Theory]
     [InlineData(
         $"Alice 10{ContestResultParser.ContestantResultSeparator} Bob 20{ContestResultParser.ContestantResultSeparator} Charlie 30")]
@@ -302,7 +302,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Name" />
     ///     to <c>true</c> when the input is missing the first contestant name, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -379,7 +379,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Result" />
     ///     to <c>true</c> when the input is missing the first contestant result, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
     /// <param name="expectedContestant2Score">The expected score of the second contestant.</param>
     [Theory]
@@ -440,7 +440,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant1Score" />
     ///     to <c>true</c> when the input is missing the first contestant score, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -517,7 +517,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Name" />
     ///     to <c>true</c> when the input is missing the second contestant name, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -594,7 +594,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Result" />
     ///     to <c>true</c> when the input is missing the second contestant result, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     [Theory]
@@ -654,7 +654,7 @@ public class ContestResultParserTests
     ///     Tests that the constructor sets <see cref="ContestResultParser.HasNoContestant2Score" />
     ///     to <c>true</c> when the input is missing the second contestant score, regardless of spacing.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -730,7 +730,7 @@ public class ContestResultParserTests
     /// <summary>
     ///     Tests that the constructor sets all properties correctly when the input is valid.
     /// </summary>
-    /// <param name="input">The input to parse.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expectedContestant1Name">The expected name of the first contestant.</param>
     /// <param name="expectedContestant1Score">The expected score of the first contestant.</param>
     /// <param name="expectedContestant2Name">The expected name of the second contestant.</param>
@@ -828,7 +828,7 @@ public class ContestResultParserTests
     /// <summary>
     ///     Tests that <see cref="ContestResultParser.GetNextError" /> returns the correct error message for invalid input.
     /// </summary>
-    /// <param name="input">The input string to validate.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expected">The expected error message.</param>
     [Theory]
     [InlineData(

@@ -156,7 +156,7 @@ public class ContestResultsProcessorTests
     ///     Tests that <see cref="ContestResultsProcessor.Process" /> throws an <see cref="InvalidOperationException" />
     ///     when provided with invalid contest results, and that the exception message matches the expected message
     /// </summary>
-    /// <param name="input">The input string to validate.</param>
+    /// <param name="input">The input to test.</param>
     /// <param name="expected">The expected error message.</param>
     [Theory]
     [InlineData(
